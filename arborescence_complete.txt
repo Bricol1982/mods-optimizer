@@ -1,0 +1,893 @@
+mods-optimizer/
+├── .github
+│   ├── ISSUE_TEMPLATE
+│   │   ├── bug_report.md
+│   │   └── bug_report_simple.md
+│   ├── PULL_REQUEST_TEMPLATE
+│   │   └── simple.md
+│   └── dependabot.yml
+├── .idea
+│   ├── inspectionProfiles
+│   │   └── Project_Default.xml
+│   ├── composerJson.xml
+│   ├── encodings.xml
+│   ├── misc.xml
+│   ├── modules.xml
+│   └── vcs.xml
+├── build
+│   ├── static
+│   │   ├── css
+│   │   │   ├── main.9b02bf79.css
+│   │   │   └── main.9b02bf79.css.map
+│   │   ├── js
+│   │   │   ├── main.3256a7f3.js
+│   │   │   ├── main.3256a7f3.js.LICENSE.txt
+│   │   │   └── main.3256a7f3.js.map
+│   │   └── media
+│   │       ├── cantina-background.552e0fce6826eee640bb.jpg
+│   │       ├── character_icons.06c21bd0224a10921ee7.png
+│   │       ├── darkside-background.bb9ee5e1c69b8a2b2679.jpg
+│   │       ├── empty-mod-shapes.d0618eeee9a888dfa810.png
+│   │       ├── g13-frame-atlas.b98ef776d9bfe53b53dc.png
+│   │       ├── g13-overlay.fb4bc4349b0852d98a92.png
+│   │       ├── gold-crit-dmg-arrow-mod-cropped.28d1d6fdb447957c96a6.png
+│   │       ├── help.d82113bd0f0d9a8998ec.png
+│   │       ├── icon-buffs.65d542035576cb3659b3.png
+│   │       ├── mod-icon-atlas-faded.cf50b604bf148ca362e3.png
+│   │       ├── mod-icon-atlas.a6e43eb7c0111d10cf82.png
+│   │       ├── mod-shape-atlas-faded.524657a9954ee5700a08.png
+│   │       ├── mod-shape-atlas.dbf7b8a883f612401ed8.png
+│   │       └── modset-background.51f3640fc00aa7d1c67d.png
+│   ├── workers
+│   │   └── optimizer.js
+│   ├── apple-touch-icon-114x114.png
+│   ├── apple-touch-icon-120x120.png
+│   ├── apple-touch-icon-144x144.png
+│   ├── apple-touch-icon-152x152.png
+│   ├── apple-touch-icon-57x57.png
+│   ├── apple-touch-icon-60x60.png
+│   ├── apple-touch-icon-72x72.png
+│   ├── apple-touch-icon-76x76.png
+│   ├── asset-manifest.json
+│   ├── favicon-128.png
+│   ├── favicon-16x16.png
+│   ├── favicon-196x196.png
+│   ├── favicon-32x32.png
+│   ├── favicon-96x96.png
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── mstile-144x144.png
+│   ├── mstile-150x150.png
+│   ├── mstile-310x310.png
+│   └── mstile-70x70.png
+├── centralized_css_copies
+│   ├── dark-side
+│   │   ├── build
+│   │   │   └── static
+│   │   │       └── css
+│   │   │           └── main.9b4ca2a9.css
+│   │   ├── coverage
+│   │   │   └── lcov-report
+│   │   │       ├── base.css
+│   │   │       └── prettify.css
+│   │   ├── src
+│   │   │   ├── components
+│   │   │   │   ├── Arrow
+│   │   │   │   │   └── Arrow.css
+│   │   │   │   ├── CharacterAvatar
+│   │   │   │   │   └── CharacterAvatar.css
+│   │   │   │   ├── Credits
+│   │   │   │   │   └── Credits.css
+│   │   │   │   ├── Dropdown
+│   │   │   │   │   └── Dropdown.css
+│   │   │   │   ├── FileInput
+│   │   │   │   │   └── FileInput.css
+│   │   │   │   ├── Help
+│   │   │   │   │   └── Help.css
+│   │   │   │   ├── Modal
+│   │   │   │   │   └── Modal.css
+│   │   │   │   ├── ModDetail
+│   │   │   │   │   └── ModDetail.css
+│   │   │   │   ├── ModFilter
+│   │   │   │   │   └── ModFilter.css
+│   │   │   │   ├── ModImage
+│   │   │   │   │   └── ModImage.css
+│   │   │   │   ├── ModSetDetail
+│   │   │   │   │   └── ModSetDetail.css
+│   │   │   │   ├── ModSetView
+│   │   │   │   │   └── ModSetView.css
+│   │   │   │   ├── ModStats
+│   │   │   │   │   └── ModStats.css
+│   │   │   │   ├── Pips
+│   │   │   │   │   └── Pips.css
+│   │   │   │   ├── RangeInput
+│   │   │   │   │   └── RangeInput.css
+│   │   │   │   ├── Sidebar
+│   │   │   │   │   └── Sidebar.css
+│   │   │   │   ├── Spinner
+│   │   │   │   │   └── Spinner.css
+│   │   │   │   ├── Spoiler
+│   │   │   │   │   └── Spoiler.css
+│   │   │   │   ├── Toggle
+│   │   │   │   │   └── Toggle.css
+│   │   │   │   └── WarningLabel
+│   │   │   │       └── WarningLabel.css
+│   │   │   ├── containers
+│   │   │   │   ├── App
+│   │   │   │   │   ├── App.css
+│   │   │   │   │   └── boilerplate.css
+│   │   │   │   ├── CharacterEditForm
+│   │   │   │   │   └── CharacterEditForm.css
+│   │   │   │   ├── CharacterEditView
+│   │   │   │   │   └── CharacterEditView.css
+│   │   │   │   ├── CharacterList
+│   │   │   │   │   └── CharacterList.css
+│   │   │   │   ├── ExploreView
+│   │   │   │   │   └── ExploreView.css
+│   │   │   │   ├── OptimizerView
+│   │   │   │   │   └── OptimizerView.css
+│   │   │   │   └── Review
+│   │   │   │       └── Review.css
+│   │   │   └── index.css
+│   │   ├── log_export_2025-04-12_16-13-03.txt
+│   │   ├── log_restore_dark-side_2025-04-12_17-04-56.txt
+│   │   ├── log_restore_export_css_2025-04-12_16-13-03_2025-04-12_16-13-22.txt
+│   │   └── mapping.xml
+│   ├── export_css_2025-04-12_16-13-03
+│   │   ├── build
+│   │   │   └── static
+│   │   │       └── css
+│   │   │           └── main.9b4ca2a9.css
+│   │   ├── coverage
+│   │   │   └── lcov-report
+│   │   │       ├── base.css
+│   │   │       └── prettify.css
+│   │   ├── src
+│   │   │   ├── components
+│   │   │   │   ├── Arrow
+│   │   │   │   │   └── Arrow.css
+│   │   │   │   ├── CharacterAvatar
+│   │   │   │   │   └── CharacterAvatar.css
+│   │   │   │   ├── Credits
+│   │   │   │   │   └── Credits.css
+│   │   │   │   ├── Dropdown
+│   │   │   │   │   └── Dropdown.css
+│   │   │   │   ├── FileInput
+│   │   │   │   │   └── FileInput.css
+│   │   │   │   ├── Help
+│   │   │   │   │   └── Help.css
+│   │   │   │   ├── Modal
+│   │   │   │   │   └── Modal.css
+│   │   │   │   ├── ModDetail
+│   │   │   │   │   └── ModDetail.css
+│   │   │   │   ├── ModFilter
+│   │   │   │   │   └── ModFilter.css
+│   │   │   │   ├── ModImage
+│   │   │   │   │   └── ModImage.css
+│   │   │   │   ├── ModSetDetail
+│   │   │   │   │   └── ModSetDetail.css
+│   │   │   │   ├── ModSetView
+│   │   │   │   │   └── ModSetView.css
+│   │   │   │   ├── ModStats
+│   │   │   │   │   └── ModStats.css
+│   │   │   │   ├── Pips
+│   │   │   │   │   └── Pips.css
+│   │   │   │   ├── RangeInput
+│   │   │   │   │   └── RangeInput.css
+│   │   │   │   ├── Sidebar
+│   │   │   │   │   └── Sidebar.css
+│   │   │   │   ├── Spinner
+│   │   │   │   │   └── Spinner.css
+│   │   │   │   ├── Spoiler
+│   │   │   │   │   └── Spoiler.css
+│   │   │   │   ├── Toggle
+│   │   │   │   │   └── Toggle.css
+│   │   │   │   └── WarningLabel
+│   │   │   │       └── WarningLabel.css
+│   │   │   ├── containers
+│   │   │   │   ├── App
+│   │   │   │   │   ├── App.css
+│   │   │   │   │   └── boilerplate.css
+│   │   │   │   ├── CharacterEditForm
+│   │   │   │   │   └── CharacterEditForm.css
+│   │   │   │   ├── CharacterEditView
+│   │   │   │   │   └── CharacterEditView.css
+│   │   │   │   ├── CharacterList
+│   │   │   │   │   └── CharacterList.css
+│   │   │   │   ├── ExploreView
+│   │   │   │   │   └── ExploreView.css
+│   │   │   │   ├── OptimizerView
+│   │   │   │   │   └── OptimizerView.css
+│   │   │   │   └── Review
+│   │   │   │       └── Review.css
+│   │   │   └── index.css
+│   │   ├── log_export_2025-04-12_16-13-03.txt
+│   │   ├── log_restore_export_css_2025-04-12_16-13-03_2025-04-12_16-13-22.txt
+│   │   └── mapping.xml
+│   ├── light_side_theme_css
+│   │   ├── App.css
+│   │   ├── CharacterEditForm.css
+│   │   ├── CharacterEditView.css
+│   │   ├── CharacterList.css
+│   │   ├── Credits.css
+│   │   ├── Dropdown.css
+│   │   ├── ExploreView.css
+│   │   ├── FileInput.css
+│   │   ├── Help.css
+│   │   ├── log_restore_light_side_theme_css_2025-04-12_18-28-29.txt
+│   │   ├── log_restore_light_side_theme_css_2025-04-12_18-34-59.txt
+│   │   ├── mapping.xml
+│   │   ├── Modal.css
+│   │   ├── ModDetail.css
+│   │   ├── ModFilter.css
+│   │   ├── ModImage.css
+│   │   ├── ModSetDetail.css
+│   │   ├── ModSetView.css
+│   │   ├── ModStats.css
+│   │   ├── OptimizerView.css
+│   │   ├── Pips.css
+│   │   ├── RangeInput.css
+│   │   ├── Review.css
+│   │   ├── Sidebar.css
+│   │   ├── Spinner.css
+│   │   ├── Spoiler.css
+│   │   ├── Toggle.css
+│   │   └── WarningLabel.css
+│   ├── 1-copy_all_css_with_schema.ps1
+│   ├── 2-restore_all_css_with_shema - Copie.ps1
+│   ├── 2-restore_all_css_with_shema.ps1
+│   ├── dark_side_theme_css.zip
+│   └── exclusion.txt
+├── coverage
+│   ├── lcov-report
+│   │   ├── src
+│   │   │   ├── components
+│   │   │   │   ├── Arrow
+│   │   │   │   │   ├── Arrow.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── CharacterAvatar
+│   │   │   │   │   ├── CharacterAvatar.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── Credits
+│   │   │   │   │   ├── Credits.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── Dropdown
+│   │   │   │   │   ├── Dropdown.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── FileInput
+│   │   │   │   │   ├── FileInput.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── Help
+│   │   │   │   │   ├── Help.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── Modal
+│   │   │   │   │   ├── FlashMessage.js.html
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── Modal.js.html
+│   │   │   │   ├── ModDetail
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── ModDetail.js.html
+│   │   │   │   ├── ModFilter
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── ModFilter.js.html
+│   │   │   │   ├── ModImage
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── ModImage.js.html
+│   │   │   │   ├── ModSetDetail
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── ModSetDetail.js.html
+│   │   │   │   ├── ModSetView
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── ModSetView.js.html
+│   │   │   │   ├── ModStats
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── ModStats.js.html
+│   │   │   │   ├── OptimizerProgress
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── OptimizerProgress.js.html
+│   │   │   │   ├── Pips
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── Pips.js.html
+│   │   │   │   ├── RangeInput
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── RangeInput.js.html
+│   │   │   │   ├── SellModButton
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── SellModButton.js.html
+│   │   │   │   ├── Sidebar
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── Sidebar.js.html
+│   │   │   │   ├── Spinner
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── Spinner.js.html
+│   │   │   │   ├── Spoiler
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── Spoiler.js.html
+│   │   │   │   ├── Toggle
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── Toggle.js.html
+│   │   │   │   └── WarningLabel
+│   │   │   │       ├── index.html
+│   │   │   │       └── WarningLabel.js.html
+│   │   │   ├── constants
+│   │   │   │   ├── characterSettings.js.html
+│   │   │   │   ├── enums.js.html
+│   │   │   │   ├── index.html
+│   │   │   │   ├── optimizationStrategy.js.html
+│   │   │   │   ├── setbonuses.js.html
+│   │   │   │   ├── statRoll.js.html
+│   │   │   │   └── statTypeMap.js.html
+│   │   │   ├── containers
+│   │   │   │   ├── App
+│   │   │   │   │   ├── App.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── CharacterEditForm
+│   │   │   │   │   ├── CharacterEditForm.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── CharacterEditView
+│   │   │   │   │   ├── CharacterEditView.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── CharacterList
+│   │   │   │   │   ├── CharacterList.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── ErrorModal
+│   │   │   │   │   ├── ErrorModal.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── ExploreView
+│   │   │   │   │   ├── ExploreView.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── OptimizerView
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── OptimizerView.js.html
+│   │   │   │   └── Review
+│   │   │   │       ├── index.html
+│   │   │   │       └── Review.js.html
+│   │   │   ├── domain
+│   │   │   │   ├── Character.js.html
+│   │   │   │   ├── CharacterDataClasses.js.html
+│   │   │   │   ├── CharacterStats.js.html
+│   │   │   │   ├── index.html
+│   │   │   │   ├── Mod.js.html
+│   │   │   │   ├── ModSet.js.html
+│   │   │   │   ├── OptimizationPlan.js.html
+│   │   │   │   ├── OptimizerRun.js.html
+│   │   │   │   ├── PlayerProfile.js.html
+│   │   │   │   ├── SetBonus.js.html
+│   │   │   │   ├── Stat.js.html
+│   │   │   │   └── TargetStat.js.html
+│   │   │   ├── state
+│   │   │   │   ├── actions
+│   │   │   │   │   ├── app.js.html
+│   │   │   │   │   ├── characterEdit.js.html
+│   │   │   │   │   ├── data.js.html
+│   │   │   │   │   ├── explore.js.html
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   ├── optimize.js.html
+│   │   │   │   │   ├── review.js.html
+│   │   │   │   │   └── storage.js.html
+│   │   │   │   ├── reducers
+│   │   │   │   │   ├── app.js.html
+│   │   │   │   │   ├── characterEdit.js.html
+│   │   │   │   │   ├── data.js.html
+│   │   │   │   │   ├── explore.js.html
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   ├── modsOptimizer.js.html
+│   │   │   │   │   ├── optimize.js.html
+│   │   │   │   │   ├── review.js.html
+│   │   │   │   │   └── storage.js.html
+│   │   │   │   ├── storage
+│   │   │   │   │   ├── Database.js.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── index.html
+│   │   │   │   ├── storage.js.html
+│   │   │   │   └── store.js.html
+│   │   │   ├── utils
+│   │   │   │   ├── areObjectsEquivalent.js.html
+│   │   │   │   ├── chooseFromArray.js.html
+│   │   │   │   ├── cleanAllyCode.js.html
+│   │   │   │   ├── clipboard.js.html
+│   │   │   │   ├── collectByKey.js.html
+│   │   │   │   ├── defer.js.html
+│   │   │   │   ├── filterObject.js.html
+│   │   │   │   ├── firstOrNull.js.html
+│   │   │   │   ├── flatten.js.html
+│   │   │   │   ├── formatAllyCode.js.html
+│   │   │   │   ├── generateKey.js.html
+│   │   │   │   ├── groupByKey.js.html
+│   │   │   │   ├── index.html
+│   │   │   │   ├── keysWhere.js.html
+│   │   │   │   ├── mapObject.js.html
+│   │   │   │   ├── nothing.js.html
+│   │   │   │   ├── objectFromEntries.js.html
+│   │   │   │   └── subjectiveScoring.js.html
+│   │   │   ├── index copy.js.html
+│   │   │   ├── index.html
+│   │   │   ├── index.js.html
+│   │   │   └── registerServiceWorker.js.html
+│   │   ├── base.css
+│   │   ├── block-navigation.js
+│   │   ├── favicon.png
+│   │   ├── index.html
+│   │   ├── prettify.css
+│   │   ├── prettify.js
+│   │   ├── sort-arrow-sprite.png
+│   │   └── sorter.js
+│   ├── clover.xml
+│   ├── coverage-final.json
+│   └── lcov.info
+├── documentation
+│   ├── App.css.txt
+│   └── constants.txt
+├── public
+│   ├── workers
+│   │   └── optimizer.js
+│   ├── apple-touch-icon-114x114.png
+│   ├── apple-touch-icon-120x120.png
+│   ├── apple-touch-icon-144x144.png
+│   ├── apple-touch-icon-152x152.png
+│   ├── apple-touch-icon-57x57.png
+│   ├── apple-touch-icon-60x60.png
+│   ├── apple-touch-icon-72x72.png
+│   ├── apple-touch-icon-76x76.png
+│   ├── favicon-128.png
+│   ├── favicon-16x16.png
+│   ├── favicon-196x196.png
+│   ├── favicon-32x32.png
+│   ├── favicon-96x96.png
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── mstile-144x144.png
+│   ├── mstile-150x150.png
+│   ├── mstile-310x310.png
+│   └── mstile-70x70.png
+├── source images
+│   ├── 10-15wampa00.jpg
+│   ├── arrow.pxm
+│   ├── character icons.pxm
+│   ├── circle.pxm
+│   ├── cross.pxm
+│   ├── diamond.pxm
+│   ├── empty-mod-shapes.pxm
+│   ├── g13 overlay.pxm
+│   ├── g13-frame-atlas.png
+│   ├── gear-overlay merged.pxm
+│   ├── gear-overlay.pxm
+│   ├── gold-crit-dmg-arrow-mod-cropped.pxm
+│   ├── help.pxm
+│   ├── icon-buffs.pxm
+│   ├── lethal_warning.svg
+│   ├── mod-arrow-critdmg.png
+│   ├── mod-icon-atlas.png
+│   ├── mod-shape-atlas.png
+│   ├── modlevel-arrow.pxm
+│   ├── modlevel-circle.pxm
+│   ├── modlevel-cross.pxm
+│   ├── modlevel-diamond.pxm
+│   ├── modlevel-square.pxm
+│   ├── modlevel-triangle.pxm
+│   ├── mods-view.png
+│   ├── mods-view.pxm
+│   ├── modset-background.pxm
+│   ├── square.pxm
+│   ├── Star-Wars-aurek-besh-alphabet-chart.svg
+│   ├── star.pxm
+│   └── triangle.pxm
+├── src
+│   ├── components
+│   │   ├── Arrow
+│   │   │   ├── Arrow.css
+│   │   │   └── Arrow.js
+│   │   ├── CharacterAvatar
+│   │   │   ├── images
+│   │   │   │   ├── aayla_secura.png
+│   │   │   │   ├── admiral_ackbar.png
+│   │   │   │   ├── ahsoka_tano.png
+│   │   │   │   ├── ahsoka_tano_(fulcrum).png
+│   │   │   │   ├── amilyn_holdo.png
+│   │   │   │   ├── asajj_ventress.png
+│   │   │   │   ├── aurra_sing.png
+│   │   │   │   ├── b2_super_battle_droid.png
+│   │   │   │   ├── barriss_offee.png
+│   │   │   │   ├── bastila_shan.png
+│   │   │   │   ├── baze_malbus.png
+│   │   │   │   ├── bb-8.png
+│   │   │   │   ├── biggs_darklighter.png
+│   │   │   │   ├── bistan.png
+│   │   │   │   ├── boba_fett.png
+│   │   │   │   ├── bodhi_rook.png
+│   │   │   │   ├── bossk.png
+│   │   │   │   ├── cad_bane.png
+│   │   │   │   ├── captain_han_solo.png
+│   │   │   │   ├── captain_phasma.png
+│   │   │   │   ├── cassian_andor.png
+│   │   │   │   ├── cc-2224_cody.png
+│   │   │   │   ├── chewbacca.png
+│   │   │   │   ├── chief_chirpa.png
+│   │   │   │   ├── chief_nebit.png
+│   │   │   │   ├── chirrut_îmwe.png
+│   │   │   │   ├── chopper.png
+│   │   │   │   ├── clone_sergeant_-_phase_i.png
+│   │   │   │   ├── clone_wars_chewbacca.png
+│   │   │   │   ├── colonel_starck.png
+│   │   │   │   ├── commander_luke_skywalker.png
+│   │   │   │   ├── coruscant_underworld_police.png
+│   │   │   │   ├── count_dooku.png
+│   │   │   │   ├── ct-21-0408_echo.png
+│   │   │   │   ├── ct-5555_fives.png
+│   │   │   │   ├── ct-7567_rex.png
+│   │   │   │   ├── darth_maul.png
+│   │   │   │   ├── darth_nihilus.png
+│   │   │   │   ├── darth_sidious.png
+│   │   │   │   ├── darth_sion.png
+│   │   │   │   ├── darth_traya.png
+│   │   │   │   ├── darth_vader.png
+│   │   │   │   ├── dathcha.png
+│   │   │   │   ├── death_trooper.png
+│   │   │   │   ├── dengar.png
+│   │   │   │   ├── director_krennic.png
+│   │   │   │   ├── eeth_koth.png
+│   │   │   │   ├── embo.png
+│   │   │   │   ├── emperor_palpatine.png
+│   │   │   │   ├── enfys_nest.png
+│   │   │   │   ├── ewok_elder.png
+│   │   │   │   ├── ewok_scout.png
+│   │   │   │   ├── ezra_bridger.png
+│   │   │   │   ├── finn.png
+│   │   │   │   ├── first_order_executioner.png
+│   │   │   │   ├── first_order_officer.png
+│   │   │   │   ├── first_order_pilot.png
+│   │   │   │   ├── first_order_sf_tie_pilot.png
+│   │   │   │   ├── first_order_stormtrooper.png
+│   │   │   │   ├── first_order_tie_pilot.png
+│   │   │   │   ├── gamorrean_guard.png
+│   │   │   │   ├── gar_saxon.png
+│   │   │   │   ├── garazeb_zeb_orrelios.png
+│   │   │   │   ├── general_grievous.png
+│   │   │   │   ├── general_kenobi.png
+│   │   │   │   ├── general_veers.png
+│   │   │   │   ├── geonosian_soldier.png
+│   │   │   │   ├── geonosian_spy.png
+│   │   │   │   ├── grand_admiral_thrawn.png
+│   │   │   │   ├── grand_master_yoda.png
+│   │   │   │   ├── grand_moff_tarkin.png
+│   │   │   │   ├── greedo.png
+│   │   │   │   ├── han_solo.png
+│   │   │   │   ├── hera_syndulla.png
+│   │   │   │   ├── hermit_yoda.png
+│   │   │   │   ├── hk-47.png
+│   │   │   │   ├── hoth_rebel_scout.png
+│   │   │   │   ├── hoth_rebel_soldier.png
+│   │   │   │   ├── ig-100_magnaguard.png
+│   │   │   │   ├── ig-86_sentinel_droid.png
+│   │   │   │   ├── ig-88.png
+│   │   │   │   ├── ima-gun_di.png
+│   │   │   │   ├── imperial_probe_droid.png
+│   │   │   │   ├── imperial_super_commando.png
+│   │   │   │   ├── jango_fett.png
+│   │   │   │   ├── jawa.png
+│   │   │   │   ├── jawa_engineer.png
+│   │   │   │   ├── jawa_scavenger.png
+│   │   │   │   ├── jedi_consular.png
+│   │   │   │   ├── jedi_knight_anakin.png
+│   │   │   │   ├── jedi_knight_guardian.png
+│   │   │   │   ├── jolee_bindo.png
+│   │   │   │   ├── jyn_erso.png
+│   │   │   │   ├── k-2so.png
+│   │   │   │   ├── kanan_jarrus.png
+│   │   │   │   ├── kit_fisto.png
+│   │   │   │   ├── kylo_ren.png
+│   │   │   │   ├── kylo_ren_(unmasked).png
+│   │   │   │   ├── l3-37.png
+│   │   │   │   ├── lando_calrissian.png
+│   │   │   │   ├── lobot.png
+│   │   │   │   ├── logray.png
+│   │   │   │   ├── luke_skywalker_(farmboy).png
+│   │   │   │   ├── luminara_unduli.png
+│   │   │   │   ├── mace_windu.png
+│   │   │   │   ├── magmatrooper.png
+│   │   │   │   ├── mission_vao.png
+│   │   │   │   ├── mob_enforcer.png
+│   │   │   │   ├── mother_talzin.png
+│   │   │   │   ├── nightsister_acolyte.png
+│   │   │   │   ├── nightsister_initiate.png
+│   │   │   │   ├── nightsister_spirit.png
+│   │   │   │   ├── nightsister_zombie.png
+│   │   │   │   ├── nute_gunray.png
+│   │   │   │   ├── obi-wan_kenobi_(old_ben).png
+│   │   │   │   ├── old_daka.png
+│   │   │   │   ├── pao.png
+│   │   │   │   ├── paploo.png
+│   │   │   │   ├── plo_koon.png
+│   │   │   │   ├── poe_dameron.png
+│   │   │   │   ├── poggle_the_lesser.png
+│   │   │   │   ├── princess_leia.png
+│   │   │   │   ├── qira.png
+│   │   │   │   ├── qui-gon_jinn.png
+│   │   │   │   ├── r2-d2.png
+│   │   │   │   ├── range_trooper.png
+│   │   │   │   ├── rebel_officer_leia_organa.png
+│   │   │   │   ├── resistance_pilot.png
+│   │   │   │   ├── resistance_trooper.png
+│   │   │   │   ├── rey_(jedi_training).png
+│   │   │   │   ├── rey_(scavenger).png
+│   │   │   │   ├── rose_tico.png
+│   │   │   │   ├── royal_guard.png
+│   │   │   │   ├── sabine_wren.png
+│   │   │   │   ├── savage_opress.png
+│   │   │   │   ├── scarif_rebel_pathfinder.png
+│   │   │   │   ├── shoretrooper.png
+│   │   │   │   ├── sith_assassin.png
+│   │   │   │   ├── sith_marauder.png
+│   │   │   │   ├── sith_trooper.png
+│   │   │   │   ├── snowtrooper.png
+│   │   │   │   ├── stormtrooper.png
+│   │   │   │   ├── stormtrooper_han.png
+│   │   │   │   ├── sun_fac.png
+│   │   │   │   ├── t3-m4.png
+│   │   │   │   ├── talia.png
+│   │   │   │   ├── teebo.png
+│   │   │   │   ├── tie_fighter_pilot.png
+│   │   │   │   ├── tusken_raider.png
+│   │   │   │   ├── tusken_shaman.png
+│   │   │   │   ├── ugnaught.png
+│   │   │   │   ├── urorrurrr.png
+│   │   │   │   ├── vandor_chewbacca.png
+│   │   │   │   ├── veteran_smuggler_chewbacca.png
+│   │   │   │   ├── veteran_smuggler_han_solo.png
+│   │   │   │   ├── visas_marr.png
+│   │   │   │   ├── wampa.png
+│   │   │   │   ├── wedge_antilles.png
+│   │   │   │   ├── wicket.png
+│   │   │   │   ├── young_han_solo.png
+│   │   │   │   ├── young_lando_calrissian.png
+│   │   │   │   ├── zaalbar.png
+│   │   │   │   └── zam_wesell.png
+│   │   │   ├── CharacterAvatar.css
+│   │   │   └── CharacterAvatar.js
+│   │   ├── Credits
+│   │   │   ├── Credits.css
+│   │   │   └── Credits.js
+│   │   ├── Dropdown
+│   │   │   ├── Dropdown.css
+│   │   │   └── Dropdown.js
+│   │   ├── FileInput
+│   │   │   ├── FileInput.css
+│   │   │   └── FileInput.js
+│   │   ├── Help
+│   │   │   ├── Help.css
+│   │   │   └── Help.js
+│   │   ├── Modal
+│   │   │   ├── FlashMessage.js
+│   │   │   ├── Modal.css
+│   │   │   └── Modal.js
+│   │   ├── ModDetail
+│   │   │   ├── ModDetail.css
+│   │   │   └── ModDetail.js
+│   │   ├── ModFilter
+│   │   │   ├── ModFilter.css
+│   │   │   ├── ModFilter.en.js
+│   │   │   ├── ModFilter.fr.js
+│   │   │   └── ModFilter.js
+│   │   ├── ModImage
+│   │   │   ├── images
+│   │   │   │   ├── arrow.png
+│   │   │   │   ├── circle.png
+│   │   │   │   ├── critchance_arrow.png
+│   │   │   │   ├── critchance_circle.png
+│   │   │   │   ├── critchance_cross.png
+│   │   │   │   ├── critchance_diamond.png
+│   │   │   │   ├── critchance_square.png
+│   │   │   │   ├── critchance_triangle.png
+│   │   │   │   ├── cross.png
+│   │   │   │   ├── diamond.png
+│   │   │   │   ├── square.png
+│   │   │   │   └── triangle.png
+│   │   │   ├── ModImage.css
+│   │   │   └── ModImage.js
+│   │   ├── ModSetDetail
+│   │   │   ├── ModSetDetail.css
+│   │   │   └── ModSetDetail.js
+│   │   ├── ModSetView
+│   │   │   ├── ModSetView.css
+│   │   │   └── ModSetView.js
+│   │   ├── ModStats
+│   │   │   ├── ModStats.css
+│   │   │   └── ModStats.js
+│   │   ├── OptimizerProgress
+│   │   │   └── OptimizerProgress.js
+│   │   ├── Pips
+│   │   │   ├── Pips.css
+│   │   │   └── Pips.js
+│   │   ├── RangeInput
+│   │   │   ├── RangeInput.css
+│   │   │   └── RangeInput.js
+│   │   ├── SellModButton
+│   │   │   └── SellModButton.js
+│   │   ├── Sidebar
+│   │   │   ├── Sidebar.css
+│   │   │   └── Sidebar.js
+│   │   ├── Spinner
+│   │   │   ├── Spinner.css
+│   │   │   └── Spinner.js
+│   │   ├── Spoiler
+│   │   │   ├── Spoiler.css
+│   │   │   └── Spoiler.js
+│   │   ├── Toggle
+│   │   │   ├── Toggle.css
+│   │   │   └── Toggle.js
+│   │   └── WarningLabel
+│   │       ├── WarningLabel.css
+│   │       └── WarningLabel.js
+│   ├── constants
+│   │   ├── characterSettings.js
+│   │   ├── characterTemplates.json
+│   │   ├── enums.js
+│   │   ├── optimizationStrategy.js
+│   │   ├── setbonuses.js
+│   │   ├── statCalculatorEng_us.json
+│   │   ├── statRoll.js
+│   │   └── statTypeMap.js
+│   ├── containers
+│   │   ├── App
+│   │   │   ├── App.css
+│   │   │   ├── App.en.js
+│   │   │   ├── App.fr.js
+│   │   │   ├── App.js
+│   │   │   ├── App.js.old
+│   │   │   ├── App.test.js
+│   │   │   └── boilerplate.css
+│   │   ├── CharacterEditForm
+│   │   │   ├── CharacterEditForm.css
+│   │   │   ├── CharacterEditForm.en.js
+│   │   │   ├── CharacterEditForm.fr.js
+│   │   │   └── CharacterEditForm.js
+│   │   ├── CharacterEditView
+│   │   │   ├── CharacterEditView copy.js
+│   │   │   ├── CharacterEditView.css
+│   │   │   ├── CharacterEditView.en.js
+│   │   │   ├── CharacterEditView.fr.js
+│   │   │   └── CharacterEditView.js
+│   │   ├── CharacterList
+│   │   │   ├── CharacterList.css
+│   │   │   ├── CharacterList.en.js
+│   │   │   ├── CharacterList.fr.js
+│   │   │   └── CharacterList.js
+│   │   ├── ErrorModal
+│   │   │   └── ErrorModal.js
+│   │   ├── ExploreView
+│   │   │   ├── ExploreView.css
+│   │   │   ├── ExploreView.en.js
+│   │   │   ├── ExploreView.fr.js
+│   │   │   └── ExploreView.js
+│   │   ├── OptimizerView
+│   │   │   ├── OptimizerView.css
+│   │   │   └── OptimizerView.js
+│   │   └── Review
+│   │       ├── Review.css
+│   │       ├── Review.fr.js
+│   │       ├── Review.js
+│   │       └── Reviewen.en.js
+│   ├── domain
+│   │   ├── Character.js
+│   │   ├── CharacterDataClasses.js
+│   │   ├── CharacterStats.js
+│   │   ├── Mod.js
+│   │   ├── ModSet.js
+│   │   ├── OptimizationPlan.js
+│   │   ├── OptimizerRun.js
+│   │   ├── PlayerProfile.js
+│   │   ├── SetBonus.js
+│   │   ├── Stat.js
+│   │   └── TargetStat.js
+│   ├── img
+│   │   ├── cantina-background.jpg
+│   │   ├── character_icons.png
+│   │   ├── darkside-background.jpg
+│   │   ├── empty-mod-shapes.png
+│   │   ├── g10-overlay.png
+│   │   ├── g11-overlay.png
+│   │   ├── g12-overlay.png
+│   │   ├── g13-frame-atlas.png
+│   │   ├── g13-overlay.png
+│   │   ├── g2-overlay.png
+│   │   ├── g3-overlay.png
+│   │   ├── g4-overlay.png
+│   │   ├── g5-overlay.png
+│   │   ├── g6-overlay.png
+│   │   ├── g7-overlay.png
+│   │   ├── g8-overlay.png
+│   │   ├── g9-overlay.png
+│   │   ├── gold-crit-dmg-arrow-mod-cropped.png
+│   │   ├── help.png
+│   │   ├── hotsauce512.png
+│   │   ├── icon-buffs.png
+│   │   ├── icon_buff_critchance.png
+│   │   ├── icon_buff_critdamage.png
+│   │   ├── icon_buff_defense.png
+│   │   ├── icon_buff_health.png
+│   │   ├── icon_buff_offense.png
+│   │   ├── icon_buff_potency.png
+│   │   ├── icon_buff_speed.png
+│   │   ├── icon_buff_tenacity.png
+│   │   ├── mod-icon-atlas-faded.png
+│   │   ├── mod-icon-atlas.png
+│   │   ├── mod-shape-atlas-faded.png
+│   │   ├── mod-shape-atlas.png
+│   │   ├── modlevel-arrow.png
+│   │   ├── modlevel-circle.png
+│   │   ├── modlevel-cross.png
+│   │   ├── modlevel-diamond.png
+│   │   ├── modlevel-square.png
+│   │   ├── modlevel-triangle.png
+│   │   ├── modset-background.png
+│   │   ├── star-active.png
+│   │   ├── star-passive.png
+│   │   └── trooper.png
+│   ├── state
+│   │   ├── actions
+│   │   │   ├── app.fr.js
+│   │   │   ├── app.js
+│   │   │   ├── characterEdit.en.js
+│   │   │   ├── characterEdit.fr.js
+│   │   │   ├── characterEdit.js
+│   │   │   ├── data.en.js
+│   │   │   ├── data.fr.js
+│   │   │   ├── data.js
+│   │   │   ├── explore.js
+│   │   │   ├── optimize.en.js
+│   │   │   ├── optimize.fr.js
+│   │   │   ├── optimize.js
+│   │   │   ├── review.js
+│   │   │   └── storage.js
+│   │   ├── reducers
+│   │   │   ├── app.js
+│   │   │   ├── characterEdit.js
+│   │   │   ├── data.js
+│   │   │   ├── explore.js
+│   │   │   ├── modsOptimizer.js
+│   │   │   ├── optimize.js
+│   │   │   ├── review.js
+│   │   │   └── storage.js
+│   │   ├── storage
+│   │   │   └── Database.js
+│   │   ├── storage.js
+│   │   └── store.js
+│   ├── utils
+│   │   ├── areObjectsEquivalent.js
+│   │   ├── chooseFromArray.js
+│   │   ├── cleanAllyCode.js
+│   │   ├── clipboard.js
+│   │   ├── collectByKey.js
+│   │   ├── defer.js
+│   │   ├── filterObject.js
+│   │   ├── firstOrNull.js
+│   │   ├── flatten.js
+│   │   ├── formatAllyCode.js
+│   │   ├── generateKey.js
+│   │   ├── groupByKey.js
+│   │   ├── keysWhere.js
+│   │   ├── mapObject.js
+│   │   ├── nothing.js
+│   │   ├── objectFromEntries.js
+│   │   └── subjectiveScoring.js
+│   ├── index.css
+│   ├── index.js
+│   └── registerServiceWorker.js
+├── .flowconfig
+├── .gitignore
+├── arborescence_complete.py
+├── arborescence_complete.txt
+├── arborescence_folders_only.py
+├── arborescence_no_nodemodules.py
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── jsconfig.json
+├── LICENSE.md
+├── mods-background.png
+├── mods-manager.iml
+├── package-lock.json
+├── package.json
+├── README.md
+├── tree-enhanced.ps1
+├── tree.txt
+└── version.py
