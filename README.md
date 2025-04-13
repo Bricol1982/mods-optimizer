@@ -1,4 +1,4 @@
-# Optimiseur de Mods de Grandivory
+# Optimiseur de Mods de Grandivory forked by Bricol
 
 L’optimiseur de mods de Grandivory pour Star Wars: Galaxy of Heroes est une application monopage développée en React.js
 qui aide à répondre à la question suivante : « Comment répartir mes mods pour tirer le meilleur parti de toutes mes équipes ? »  
