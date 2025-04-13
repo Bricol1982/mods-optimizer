@@ -1,8 +1,15 @@
+/* =========================
+   Thème Dark Side – Star Wars
+   ========================= */
+
+/* Classes utilitaires (modifiées si nécessaire) */
 .gold {
-  color: #eeca44 !important;
+  /* Un doré métallique pour accentuer certains éléments */
+  color: #d4af37 !important;
 }
 
 .purple {
+  /* On peut conserver ou adapter la violet si besoin */
   color: #a35ef9 !important;
 }
 
@@ -11,19 +18,20 @@
 }
 
 .green {
+  /* Rarement utilisé dans ce thème – possibilité de désactiver */
   color: #8fff3a !important;
 }
 
 .gray {
-  color: #ccfffe !important;
+  color: #cccccc !important;
 }
 
 .red-text {
-  color: red !important;
+  color: #ff3333 !important;
 }
 
 .increase {
-  color: #60bd1b;
+  color: #ff4d4d;
 }
 
 .increase::before {
@@ -31,7 +39,7 @@
 }
 
 .decrease {
-  color: #e64343;
+  color: #ff6666;
 }
 
 .center {
@@ -44,7 +52,7 @@
 
 .box {
   display: inline-block !important;
-  border: 1px solid dodgerblue !important;
+  border: 1px solid #880000 !important;
   padding: .25em !important;
 }
 
@@ -60,7 +68,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: black;
+  background-color: #000000;
   border-radius: 2px;
   z-index: -1;
 }
@@ -72,27 +80,39 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background-image: linear-gradient(30deg, #afa992 10%, /*#796f3e 30%, #2f2a13 50%, */ black 70%);
+  background-image: linear-gradient(30deg, #5c0000 10%, black 70%);
   border-radius: 2px;
   z-index: -2;
 }
 
+/* =========================
+   Règles Globales
+   ========================= */
 html, body {
   height: 100%;
+  background-color: #000;  /* Fond noir global */
+  color: #e0e0e0;
 }
 
 #root {
   height: 100%;
 }
 
+/* =========================
+   Conteneur Principal
+   ========================= */
 .App {
   text-align: left;
   height: 100%;
   font-family: 'Helvetica', 'Arial', sans-serif;
   display: flex;
   flex-direction: column;
+  background-color: #000;  /* Fond noir */
 }
 
+/* =========================
+   Scrollbar Personnalisée
+   ========================= */
 ::-webkit-scrollbar {
   width: .4em;
   height: .4em;
@@ -100,23 +120,26 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-  border: 1px inset dodgerblue;
-  background: #1e2f46;
+  border: 1px inset #440000;
+  background: #0f0f0f;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: dodgerblue;
+  background: #880000;
   min-height: 3em;
 }
 
+/* =========================
+   En-tête de l'Application
+   ========================= */
 .App-header {
   flex: 0 1 auto;
   display: grid;
   grid-template-areas: auto 1fr / auto auto;
-  background-color: #222;
+  background-color: #000;  /* Fond noir intense */
   padding: 0;
-  color: white;
-  border-bottom: 1px solid gray;
+  color: #e0e0e0;
+  border-bottom: 1px solid #444;
 }
 
 .App-title {
@@ -124,7 +147,9 @@ html, body {
   grid-column: 1;
   font-size: 1.5em;
   margin: .5em;
-  background-image: url('../../img/gold-crit-dmg-arrow-mod-cropped.png');
+  /* Adaptation de l'image de fond pour un logo sombre/doré
+     Remplacez l'URL si besoin par une image correspondant à Dark Side */
+  background-image: url('../../img/trooper.png');
   background-position: 0 50%;
   background-repeat: no-repeat;
   background-size: 2em 2em;
@@ -136,6 +161,7 @@ html, body {
   font-size: .5em;
 }
 
+/* Navigation de l'en-tête */
 .App-header nav {
   grid-row: 2;
   grid-column: 1;
@@ -148,15 +174,16 @@ html, body {
 .App-header nav button {
   margin-bottom: 0;
   border-radius: 5px 5px 0 0;
-  border: 1px solid gray;
-  background-color: #202020;
-  color: lightgray;
+  border: 1px solid #660000;
+  background-color: #110000;
+  color: #e0e0e0;
 }
 
 .App-header nav button:hover, .App-header nav button:focus {
-  color: white;
+  color: #ffffff;
 }
 
+/* Zone d'actions dans l'en-tête */
 .App-header .actions {
   grid-row: 1 / span 2;
   grid-column: 2;
@@ -164,7 +191,7 @@ html, body {
 }
 
 .App-header .actions label:not(.button),
-.App-header .actions input:not(.button){
+.App-header .actions input:not(.button) {
   margin: 0 .25em;
   vertical-align: middle;
 }
@@ -181,19 +208,22 @@ html, body {
   display: inline-block;
 }
 
+/* =========================
+   Pied de page
+   ========================= */
 .App-footer {
   flex: 0 1 auto;
-  background-color: #222;
+  background-color: #000;
   padding: 0;
-  color: lightgray;
+  color: #a0a0a0;
   font-size: .75em;
-  border-top: 1px solid gray;
+  border-top: 1px solid #444;
   text-align: center;
   position: relative;
 }
 
 .App-footer a {
-  color: lightgray;
+  color: #a0a0a0;
   text-decoration: underline;
 }
 
@@ -210,49 +240,61 @@ html, body {
   margin: .5em;
 }
 
+/* =========================
+   Corps de l'Application
+   ========================= */
 .app-body {
   flex: 1 1 auto;
   display: flex;
-  background: black url('../../img/cantina-background.jpg') no-repeat fixed;
+  /* Pour renforcer le thème Dark Side, on opte pour un fond noir pur ou avec une image
+     Vous pouvez remplacer l'URL par une image correspondant à l'univers Sith */
+  background: #000 url('../../img/darkside-background.jpg') no-repeat fixed;
   background-size: cover;
   overflow: hidden;
-  color: white;
-  text-shadow: 2px 2px 1px black;
+  color: #e0e0e0;
+  text-shadow: 2px 2px 1px #000;
   align-items: stretch;
 }
 
 .app-body a {
-  color: white;
+  color: #e0e0e0;
   text-decoration: underline;
 }
 
 .app-body a.call-out {
   font-weight: bold;
-  color: #eeca44;
+  color: #d4af37;
 }
 
+/* =========================
+   Navigation Secondaire (sub-nav)
+   ========================= */
 nav.sub-nav {
-  border-bottom: 1px solid dodgerblue;
+  border-bottom: 1px solid #880000;
   position: relative;
 }
 
 nav.sub-nav button {
   border-radius: 5px 5px 0 0;
-  border: 1px solid dodgerblue;
-  background-color: #202020;
+  border: 1px solid #880000;
+  background-color: #110000;
   margin-bottom: -1px;
-  color: lightgray;
+  color: #e0e0e0;
 }
 
+/* =========================
+   Boutons
+   ========================= */
 button, .button {
   display: inline-block;
   margin: .25em;
-  background-color: #46801a;
-  border: 1px outset limegreen;
+  /* Boutons en Dark Side : fond rouge sombre, bordure en relief */
+  background-color: #8B0000;
+  border: 1px outset #aa0000;
   border-radius: 5px;
   font-size: 1rem;
   font-weight: 300;
-  color: white;
+  color: #e0e0e0;
   padding: 1px .25em;
   opacity: .9;
   cursor: pointer;
@@ -273,22 +315,22 @@ button.small, .button.small {
 }
 
 button:active, .button:active {
-  border: 1px inset limegreen;
+  border: 1px inset #aa0000;
 }
 
 button.red, .button.red {
   background-color: darkred;
-  border: 1px outset red;
+  border: 1px outset #ff0000;
 }
 
 button.red:active, .button.red:active {
-  border: 1px inset red;
+  border: 1px inset #ff0000;
 }
 
 button.blue, .button.blue {
   background-color: #0b4884;
   border: 1px outset dodgerblue;
-  color: white !important;
+  color: #fff !important;
 }
 
 button.blue:active, .button.blue:active {
@@ -314,10 +356,13 @@ button.link {
 
 nav button.active {
   border-bottom: none;
-  color: white;
+  color: #ffffff;
   position: relative;
 }
 
+/* =========================
+   Icônes et divers
+   ========================= */
 .icon {
   display: inline-block;
   height: 1em;
@@ -332,6 +377,9 @@ nav button.active {
   max-width: 45em;
 }
 
+/* =========================
+   Styles pour Modals et autres composants
+   ========================= */
 .modal.reset-modal {
   width: 40em;
 }
@@ -341,7 +389,7 @@ nav button.active {
   background-color: #ead118;
   width: 30em;
   min-height: 12em;
-  color: black;
+  color: #000;
   text-shadow: none;
 }
 
@@ -370,12 +418,13 @@ nav button.active {
   max-width: 40em;
 }
 
+/* Barre de progression pour modals */
 .modal .progress {
   height: 1em;
   width: 17em;
   margin: .5em auto;
   border-radius: .5em;
-  border: 1px solid limegreen;
+  border: 1px solid #aa0000;
   padding: 0;
   overflow: hidden;
 }
@@ -383,14 +432,16 @@ nav button.active {
 .modal .progress .progress-bar {
   display: block;
   height: 100%;
-  background-image: repeating-linear-gradient(-45deg, #8fff3a, #46801a 1em, #8fff3a 2em);
+  background-image: repeating-linear-gradient(-45deg, #ff4d4d, #8B0000 1em, #ff4d4d 2em);
   background-size: 2.828em 1em;
   background-repeat: repeat-x;
   animation: Progress 1s linear infinite;
   transition: width .5s;
 }
 
-
+/* =========================
+   Autres éléments
+   ========================= */
 strong {
   font-weight: bold;
   color: #a35ef9;
@@ -400,9 +451,9 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   font-size: 1em;
-  color: white;
-  background-color: rgb(0, 0, 64);
-  border: 1px solid dodgerblue;
+  color: #e0e0e0;
+  background-color: #000033;
+  border: 1px solid #880000;
   border-radius: 0;
   padding: .25em;
 }
@@ -417,7 +468,7 @@ select {
 }
 
 .add-ally-code-form h4 {
-  color: #eeca44;
+  color: #d4af37;
   margin-top: 0;
   margin-bottom: 1em;
 }

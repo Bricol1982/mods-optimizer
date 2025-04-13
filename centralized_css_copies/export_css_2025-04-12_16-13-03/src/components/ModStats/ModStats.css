@@ -1,0 +1,94 @@
+.mod-stats {
+  text-align: left;
+  width: 17em;
+  position: relative;
+}
+
+.mod-stats h4 {
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.mod-stats ul {
+  list-style: none;
+  padding-left: 1em;
+  margin: 0 0 .5em 0;
+  font-weight: lighter;
+}
+
+.mod-stats ul.secondary {
+  color: #c5f5f5;
+}
+
+.mod-stats ul li {
+  line-height: 1.2em;
+  margin: 0;
+}
+
+.mod-stats .class {
+  display: inline-block;
+  float: right;
+  height: 1em;
+}
+
+.mod-stats .class-S {
+  color: #eeca44;
+}
+
+.mod-stats .class-A {
+  color: #a35ef9;
+}
+
+.mod-stats .class-B {
+  color: #2997f1;
+}
+
+.mod-stats .class-C {
+  color: #8fff3a;
+}
+
+.mod-stats .class-D {
+  color: #ccfffe;
+}
+
+.stat-rating {
+  float: right;
+  cursor: default;
+  font-size: 0.8em;
+}
+
+.mod-rating {
+  text-align: left;
+  cursor: default;
+  font-size: 1em;
+  padding-bottom: 1em;
+}
+
+.mod-rating .badge-0 {
+  text-shadow: none;
+}
+
+.mod-rating .badge-1 {
+  text-shadow: 0 2px 2px white, 1px 1px 3px white;
+}
+
+.mod-rating .badge-2 {
+  text-shadow: 0 2px 2px gold, 1px 1px 3px gold;
+}
+
+.mod-stats .avatar {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: .8em;
+}
+
+.mod-stats .avatar-name {
+  vertical-align: middle;
+  margin-left: .5em;
+}
+
+.mod-stats button.delete-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

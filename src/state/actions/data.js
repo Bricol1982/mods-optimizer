@@ -306,19 +306,19 @@ function showFetchResult(fetchData, errorMessages, usedSession) {
 
     fetchResults.push(
       <p key={100}>
-        Successfully pulled data for <span className={'gold'}>{Object.keys(fetchData.profile.characters).length}
-        </span> characters and <span className={'gold'}>{fetchData.profile.mods.length}</span> mods.
+        Données récupérées pour <span className={'gold'}>{Object.keys(fetchData.profile.characters).length}
+        </span> personnages et <span className={'gold'}>{fetchData.profile.mods.length}</span> mods.
       </p>
     );
 
     fetchResults.push(
       <p key={111}>
-        <strong className={'gold'}>Your mod data was pulled from HotUtils, and is completely up-to-date!</strong>
+        <strong className={'gold'}>Vos données de mods ont été récupérées depuis HotUtils et sont entièrement à jour!</strong>
       </p>
     );
     fetchResults.push(
       <p key={121}>
-        <strong className={'gold'}>You can fetch fresh mod data again immediately!</strong>
+        <strong className={'gold'}>Vous pouvez récupérer immédiatement les données de vos mods!</strong>
       </p>
     );
 
@@ -326,21 +326,21 @@ function showFetchResult(fetchData, errorMessages, usedSession) {
       fetchResults.push(<hr key={130} />);
       fetchResults.push(
         <h3 key={140}><strong>
-          Remember: The optimizer can only pull data for mods that you currently have equipped, unless you're pulling
-          data using a HotUtils session!
+          N'oubliez pas : l'optimiseur ne peut récupérer que les données des mods que vous avez déjà équipés, sauf si vous récupérez
+          les données via une session HotUtils!
         </strong></h3>
       );
       fetchResults.push(
         <p key={150}>
-          If it looks like you're missing mods, try equipping them on your characters and fetching data again after
-          the time listed above.
+          S'il semble qu'il vous manque des mods, essayez d'en équiper vos personnages et de récupérer à nouveau
+          les données après le délai indiqué ci-dessus.
         </p>
       );
     }
 
     dispatch(changeOptimizerView('edit'));
     dispatch(showFlash(
-      'Success!',
+      'Succès!',
       <div className={'fetch-results'}>
         {fetchResults}
       </div>

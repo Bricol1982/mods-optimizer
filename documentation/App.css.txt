@@ -1,0 +1,206 @@
+Vous trouverez ci-dessous une documentation détaillée du fichier **App.css** qui régit l’apparence générale de votre application. Cette documentation décrit les principales sections, classes utilitaires et composants définis dans le fichier afin de faciliter sa compréhension et sa maintenance.
+
+---
+
+# Documentation de App.css
+
+## 1. Introduction
+
+Ce fichier CSS constitue la base de style pour une application React (probablement créée avec Create React App) dont la structure HTML comporte un élément racine `#root` et une classe principale `.App`. Le design présente une **ambiance sombre et contrastée** avec un arrière-plan majoritairement foncé, accompagné d’accents colorés et d’éléments personnalisés pour la navigation, les boutons et les modals.  
+Les règles de style sont réparties entre :
+
+- **Classes utilitaires** qui définissent des couleurs et des alignements génériques.
+- **Règles globales** qui fixent des comportements pour les éléments `html`, `body`, et `#root`.
+- **Styles pour le conteneur principal** `.App` et ses sous-sections (`.App-header`, `.App-footer`, `.app-body`).
+- **Personnalisation des éléments de défilement (scrollbars)**.
+- **Règles spécifiques pour les boutons**, les liens et autres composants interactifs.
+- **Styles pour divers composants modaux** et autres éléments de l’interface.
+
+---
+
+## 2. Classes Utilitaires de Couleur
+
+Ces classes permettent d’appliquer rapidement des couleurs aux éléments sans avoir à définir des règles CSS spécifiques à chaque composant.
+
+- **.gold**  
+  - *But* : Appliquer une teinte dorée.
+  - *Règle* : `color: #eeca44 !important;`
+
+- **.purple**  
+  - *But* : Utiliser une teinte violette.
+  - *Règle* : `color: #a35ef9 !important;`
+
+- **.blue**  
+  - *But* : Couleur bleue.
+  - *Règle* : `color: #2997f1 !important;`
+
+- **.green**  
+  - *But* : Appliquer une couleur verte.
+  - *Règle* : `color: #8fff3a !important;`
+
+- **.gray**  
+  - *But* : Appliquer une nuance grisâtre.
+  - *Règle* : `color: #ccfffe !important;`
+
+- **.red-text**  
+  - *But* : Mettre le texte en rouge.
+  - *Règle* : `color: red !important;`
+
+Les classes **.increase** et **.decrease** servent à afficher des indicateurs de variation (ex. + ou -) avec une coloration en fonction de la tendance (vert pour l’augmentation, rouge pour la diminution) :
+  
+- **.increase**  
+  - *Règle* : `color: #60bd1b;`  
+  - Son pseudo-élément `::before` ajoute un symbole « + » automatiquement.
+
+- **.decrease**  
+  - *Règle* : `color: #e64343;`
+
+---
+
+## 3. Classes d’Alignement et de Mise en Page
+
+Ces classes simplifient l’alignement du contenu ou l’ajout de certains styles de bordure et d’espacement.
+
+- **.center**  
+  - *But* : Centrer le texte.
+  - *Règle* : `text-align: center !important;`
+
+- **.left**  
+  - *But* : Aligner le texte à gauche.
+  - *Règle* : `text-align: left !important;`
+
+- **.box**  
+  - *But* : Encadrer un élément dans un bloc avec bordure.
+  - *Règles* : Affichage en `inline-block`, bordure de 1px en dodgerblue et padding réduit.
+
+- **.inset**  
+  - *But* : Position relative avec un effet d’ombre ou de surimpression.
+  - *Règles* : Position relative avec des pseudo-éléments `::after` et `::before` qui ajoutent des arrière-plans (noir et gradient) pour créer un effet de profondeur.
+
+---
+
+## 4. Règles Globales
+
+- **html, body, #root**  
+  - *But* : S’assurer que l’application occupe toute la hauteur de la fenêtre.
+  - *Règles* : `height: 100%;`
+
+- **.App**  
+  - *But* : Conteneur principal de l’application.
+  - *Règles* :
+    - `text-align: left;`
+    - `height: 100%;`
+    - Utilisation de `flex` pour organiser les composants en colonne.
+    - Police générale définie sur Helvetica ou Arial.
+
+---
+
+## 5. Composants Principaux de l’Application
+
+### 5.1 .App-header
+
+- **Description** : Zone supérieure contenant le titre, la navigation et les actions.
+- **Caractéristiques** :
+  - Fond sombre : `background-color: #222;`
+  - Utilisation de CSS Grid pour organiser le contenu (titre, navigation, actions).
+  - Bordure inférieure en gris.
+  - Le titre `.App-title` intègre une image de fond (logo) et un sous-titre.
+
+### 5.2 .App-footer
+
+- **Description** : Section de pied de page de l’application.
+- **Caractéristiques** :
+  - Fond identique à l’en-tête (`#222`).
+  - Texte en lightgray et bordure supérieure en gris.
+  - Positionnement relatif pour afficher des informations comme la version de l’application dans un coin.
+
+### 5.3 .app-body
+
+- **Description** : Zone principale du contenu.
+- **Caractéristiques** :
+  - Fond : un arrière-plan noir avec une image fixe (cantina-background.jpg) qui est redimensionnée en cover.
+  - Couleur du texte : blanc avec un effet de text-shadow pour améliorer la lisibilité sur un fond sombre.
+  - Affichage en flex pour occuper la totalité de l'espace restant.
+
+---
+
+## 6. Personnalisation de la Barre de Défilement
+
+Les règles personnalisent le style des scrollbars dans les navigateurs basés sur WebKit (Chrome, Safari) :
+
+- **::-webkit-scrollbar**  
+  - Largeur et hauteur réduites.
+- **::-webkit-scrollbar-track**  
+  - Bordure de type inset en dodgerblue, fond en #1e2f46.
+- **::-webkit-scrollbar-thumb**  
+  - Fond en dodgerblue avec une taille minimale.
+
+---
+
+## 7. Boutons et Interactions
+
+Les styles des boutons (balises `<button>` et éléments avec la classe `.button`) sont définis pour offrir une apparence uniforme :
+
+- **Style général des boutons**  
+  - Fond de couleur (exemple : #46801a pour un bouton classique).
+  - Bordure en mode outset ou inset selon l’état (normal ou actif).
+  - Arrondi des coins (border-radius : 5px).
+  - Effet de survol (hover) qui améliore l’opacité et change la bordure.
+  
+- **Boutons spécifiques**  
+  - Boutons en rouge ou bleu utilisent des règles spécifiques pour leur fond et leur bordure (ex.: `.button.red` et `.button.blue`).
+
+- **Boutons de type "link"**  
+  - Semblent être des boutons stylisés pour ressembler à des liens (background transparent, soulignement).
+
+---
+
+## 8. Styles Additionnels
+
+### 8.1 Navigation
+
+- **Navigation dans l’en-tête (.App-header nav)**  
+  - Organisée en grille pour séparer la navigation principale des actions.
+  - Boutons avec un style particulier, notamment pour indiquer l’élément actif (sans bordure inférieure).
+
+- **Sous-navigation (nav.sub-nav)**  
+  - Bordure inférieure en dodgerblue.
+  - Boutons avec un fond similaire au reste de l’en-tête, et une différence visuelle lors de l’activation.
+
+### 8.2 Modals et Éléments Spécifiques
+
+- **Modals**  
+  - Différents styles pour les modals d’erreur, changelog, aide, etc.
+  - Exemples :  
+    - `.modal.error-modal` a un fond jaune et une bordure sombre pour attirer l’attention.
+    - `.modal.pull-unequipped-modal`, `.modal.changelog-modal` définissent des largeurs maximales pour une meilleure lisibilité.
+
+- **Barres de progression dans les modals**  
+  - Classe `.progress` et son enfant `.progress-bar` définissent une barre qui se remplit avec un gradient animé.
+
+### 8.3 Autres Règles
+
+- **Select, images, formulaires**  
+  - Le style des éléments `<select>` est personnalisé pour supprimer l’apparence native et harmoniser le look.
+  - Les images avec la classe `.fit` s’adaptent à la largeur du conteneur.
+
+- **Classes diverses**  
+  - `.inset` pour ajouter des effets d’ombre autour d’un élément.
+  - Classes de textes formatés (comme `.increase` ou `.decrease`) qui gèrent également des pseudo-éléments pour ajouter des symboles.
+
+---
+
+## 9. Considérations et Utilisation
+
+- **Ambiance du thème**  
+  L’ensemble des styles (fonds foncés, texte clair, accents de dodgerblue et autres couleurs spécifiques) crée une **atmosphère sombre, moderne et presque futuriste** avec une touche de référence "cantina" (rappelant potentiellement une ambiance Star Wars).
+
+- **Flexibilité et Réutilisation**  
+  Les classes utilitaires (pour les couleurs, alignements, etc.) permettent de réutiliser facilement ces styles sur d’autres pages ou composants sans redondance.
+
+- **Personnalisation**  
+  Le fichier est conçu pour que vous puissiez modifier facilement des parties du thème (exemple : changer l’arrière-plan de l’en-tête, ajuster les couleurs des boutons, ou remplacer l’image de fond).
+
+---
+
+Cette documentation devrait vous permettre de mieux comprendre la structure et les objectifs de votre App.css. Elle est également une bonne base pour procéder à des modifications et créer de nouveaux thèmes, notamment en utilisant une approche basée sur des variables CSS (voir documentation sur le travail de thème précédemment proposée) afin de centraliser vos choix de couleurs et de styles.

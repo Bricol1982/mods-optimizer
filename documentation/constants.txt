@@ -1,0 +1,135 @@
+Voici une documentation complète qui couvre l’architecture et le fonctionnement de l’ensemble des fichiers ainsi qu’un guide pour adapter (« fine tuner ») les valeurs utilisées dans le système. Chaque fichier joue un rôle précis dans la gestion des statistiques, l’application des stratégies d’optimisation et la configuration des cibles de mods pour chaque personnage ou template. Vous trouverez ci-dessous une description détaillée des modules et des conseils pour ajuster leurs valeurs.
+
+─────────────────────────────  
+### 1. Vue d’ensemble du système
+
+Le système est centré sur l’optimisation des personnages par le biais de plans d’optimisation et de cibles de mods. L’objectif est d’attribuer des valeurs précises aux attributs (par exemple : santé, protection, vitesse, dégâts critiques, etc.) pour guider la répartition des mods et optimiser les performances en combat. Le projet se décompose grossièrement en trois ensembles fonctionnels :
+
+- **Configuration des personnages et templates**  
+  Les fichiers tels que `characterSettings.js` et `characterTemplates.json` définissent les paramètres appliqués à chaque personnage ainsi que les cibles spécifiques (par exemple pour des affrontements PvP, des raids ou des événements) en associant des plans d’optimisation préconfigurés.
+
+- **Définition et mapping des stratégies d’optimisation et des bonus de set**  
+  Les fichiers `optimizationStrategy.js` et `setbonuses.js` regroupent les stratégies génériques d’optimisation (instances d’*OptimizationPlan*) et les règles de bonus de set, respectivement. Ils offrent une base commune qui peut être réutilisée dans les configurations individuelles.
+
+- **Gestion des statistiques et modélisation des mods**  
+  Les fichiers `enums.js`, `statCalculatorEng_us.json`, `statRoll.js` et `statTypeMap.js` fournissent les définitions et mappings entre les noms de statistiques externes et internes, ainsi que la logique de roll de mod (plage de valeurs par rareté). Ils permettent de calculer et de traduire les performances ou l’impact des mods appliqués aux personnages.
+
+─────────────────────────────  
+### 2. Description détaillée des fichiers
+
+#### a. characterSettings.js  
+- **Fonctionnement :**  
+  Ce fichier importe la classe `CharacterSettings` et les plans d’optimisation depuis `optimizationStrategy`. Pour chaque personnage (identifié par un ID ou un nom), il construit une instance de `CharacterSettings` qui peut inclure :
+  - Un ou plusieurs *OptimizationPlan* (objectifs d’optimisation qui définissent des cibles de stats).
+  - Une liste de tags ou d’alias (facultatif) pour identifier des rôles ou des affiliations.
+  - Une option de type de dégâts (`DamageType`), indiquant si le personnage doit être optimisé pour des dégâts physiques, spéciaux ou mixtes.
+  - Des cibles de mod (TargetStat) peuvent être ajoutées dans certains plans pour forcer l’atteinte d’un minimum sur une ou plusieurs statistiques.
+  
+- **Comment fine tuner :**  
+  Pour ajuster les valeurs d’un personnage, il suffit de modifier les paramètres passés aux constructeurs d’*OptimizationPlan* (par exemple, augmenter la santé, ajuster la vitesse ou modifier les pourcentages liés à la probabilité de coup critique). Vous pouvez également ajouter des TargetStat à l’aide d’objets TargetStat pour spécifier des plages de valeurs.
+  
+#### b. characterTemplates.json  
+- **Fonctionnement :**  
+  Ce fichier JSON contient des modèles de configuration pour divers scénarios d’affrontements (ex. « Assault Battle – Forest Moon », « Endor Raid », etc.).  
+  Chaque template définit :
+  - Un nom de template.
+  - La liste des personnages sélectionnés avec pour chacun :
+    - Un identifiant (`id`).
+    - Une cible (`target`) reprenant les valeurs souhaitées pour chacun des attributs (health, protection, speed, crit damage, etc.).
+    - Des restrictions ou ajustements supplémentaires (tels que `primaryStatRestrictions` ou `setRestrictions`), qui orientent la sélection et l’optimisation des mods.
+    
+- **Comment fine tuner :**  
+  Vous pouvez modifier ces cibles pour ajuster ce qui est attendu de chaque personnage lors d’un événement spécifique. Par exemple, pour augmenter la difficulté ou la précision d’un template, ajustez les valeurs dans les cibles des statistiques. Les règles dans `primaryStatRestrictions` ou `setRestrictions` déterminent quelles statistiques ou sets de mods doivent être privilégiés.
+
+#### c. enums.js  
+- **Fonctionnement :**  
+  Ce module expose plusieurs mappings utilisés dans le système :
+  - **modSets :** Mappe des clés numériques aux noms de sets (ex. 1 → 'health').
+  - **modSlots :** Associe un numéro à un type de slot (ex. 1 → 'square').
+  - **modStats :** Détermine la correspondance entre les codes internes et le libellé d’affichage des statistiques (par exemple, 'UNITSTATMAXHEALTH' correspond à 'Health' ou 'Health %').
+  
+- **Comment fine tuner :**  
+  Pour modifier les mappings ou ajouter de nouveaux sets/slots/statistiques, ajustez les valeurs dans ce fichier. Cela est utile si de nouvelles statistiques sont introduites ou si la nomenclature change dans l’interface ou le calcul des mods.
+
+#### d. optimizationStrategy.js  
+- **Fonctionnement :**  
+  Ce fichier définit un objet statique (gelé par `Object.freeze`) qui regroupe diverses stratégies d’optimisation sous forme d’instances d’*OptimizationPlan*. Chaque clé du dictionnaire décrit une stratégie (par exemple « Speed », « Speed, Crit and Mixed Damage », etc.) et chacune est initialisée avec des valeurs numériques spécifiques correspondant aux cibles de stat pour différents paramètres (health, speed, crit damage, potency, etc.).
+  
+- **Comment fine tuner :**  
+  Pour ajuster globalement des stratégies courantes, modifiez ou ajoutez des nouvelles instances dans ce module. Comme les plans sont réutilisés dans `characterSettings.js` par la méthode `rename` ou directement, il suffit de mettre à jour les valeurs dans l’instance pour impacter l’ensemble du système. Assurez-vous de bien tester après modification que les valeurs s’intègrent logiquement au gameplay.
+
+#### e. setbonuses.js  
+- **Fonctionnement :**  
+  Le module définit les bonus de set pour différents types de sets en créant un tableau de `SetBonus` (chaque bonus comporte le nom du set, le nombre de pièces requises, et deux niveaux de bonus définis par des objets `Stat`).
+  Ce tableau est transformé ensuite en un objet indexé par le nom du set, et l’objet est gelé pour empêcher les modifications en runtime.
+  
+- **Comment fine tuner :**  
+  Pour ajuster les bonus de set, modifiez les valeurs dans la construction de `SetBonus`. Par exemple, pour le set "health", vous pourriez changer la valeur du bonus de 5% et 10% ou ajuster le nombre de pièces requises. Ce fichier permet d’affiner les bonus cumulés lorsque plusieurs pièces du même set sont équipées.
+
+#### f. statCalculatorEng_us.json  
+- **Fonctionnement :**  
+  Ce fichier JSON mappe des indices (numériques ou chaînes) aux noms des statistiques utilisées dans le calcul et l’affichage (ex. "1" → "Health", "5" → "Speed", etc.). Ce mapping sert lors de la conversion ou de l’exportation des statistiques.
+  
+- **Comment fine tuner :**  
+  Si de nouvelles statistiques sont ajoutées ou que vous souhaitez renommer une stat pour qu’elle corresponde mieux à une terminologie, mettez à jour ce JSON. Faites attention que les indices restent cohérents avec le reste du système.
+
+#### g. statRoll.js  
+- **Fonctionnement :**  
+  Ce module définit les plages minimales et maximales que peut produire un "roll" pour une statistique donnée en fonction du niveau de rareté (allant de 1 à 6). Chaque statistique (ex. "Critical Chance %", "Health", "Speed", etc.) dispose d’un objet indiquant les valeurs minimales et maximales par niveau.
+  
+- **Comment fine tuner :**  
+  Pour modifier les valeurs de roll – par exemple en cas de rééquilibrage des mods – il suffit de modifier les valeurs min et max pour la statistique concernée pour chaque niveau de rareté. Vous pouvez aussi ajouter de nouvelles statistiques à gérer si le jeu le requiert. Les valeurs actuelles sont conçues en référence aux informations issues de sources officielles et de la communauté (les liens en commentaires dans le fichier indiquent les références utilisées).
+
+#### h. statTypeMap.js  
+- **Fonctionnement :**  
+  Ce fichier établit une correspondance entre les noms de statistiques tels qu’exportés par le mod (ex. "Health", "Protection", "Critical Damage", etc.) et les propriétés internes utilisées par le système d’optimisation (par exemple "health", "protection", "critDmg", etc.).  
+  Il peut également gérer des cas particuliers où plusieurs valeurs internes correspondent à une statistique externe (ex. "Offense" correspond à la somme de "physDmg" et "specDmg").
+  
+- **Comment fine tuner :**  
+  Si l’exportateur ou le calculateur de stats change la nomenclature, modifiez ce mapping afin que les conversions restent correctes. Ceci est essentiel pour que les valeurs importées se traduisent correctement en cibles d’optimisation.
+
+─────────────────────────────  
+### 3. Guide pour la mise au point (fine tuning) des valeurs
+
+Pour ajuster et affiner le système, suivez ces recommandations :
+
+1. **Plan d’optimisation et valeurs par défaut (optimizationStrategy.js) :**  
+   - Testez différentes configurations en modifiant les paramètres dans les instances d’*OptimizationPlan*.  
+   - Par exemple, pour augmenter la survivabilité, augmentez la valeur de santé et protection.  
+   - Utilisez la méthode `rename` pour appliquer une stratégie préconfigurée à un personnage tout en conservant la possibilité d’avoir plusieurs variantes (par rôle PvP, PvE, etc.).
+
+2. **Templates de mod cible (characterTemplates.json) :**  
+   - Adaptez les cibles (target) pour correspondre aux exigences d’événements spécifiques.  
+   - Ajustez les valeurs attendues pour les statistiques clés (ex. augmenter le minimum requis pour la « Health » ou la « Speed ») et modifiez les restrictions et cibles secondaires.
+   - Vérifiez que les noms (clés) utilisés dans les cibles correspondent bien aux noms définis dans `statCalculatorEng_us.json` et `statTypeMap.js`.
+
+3. **Réglage des bonus de set (setbonuses.js) :**  
+   - Ajustez les pourcentages de bonus ou le nombre de pièces requis afin de rééquilibrer l’impact des sets sur les statistiques globales.  
+   - Testez en simulant l’équipement complet de sets et en vérifiant le cumul des bonus pour éviter des sur-optimisations.
+
+4. **Modifications des valeurs de roll (statRoll.js) :**  
+   - Actualisez ou ajustez les plages de valeurs si vous constatez que certains mods apparaissent trop faibles ou trop puissants.  
+   - Modifiez les valeurs minimales/maximales par niveau de rareté selon les objectifs de rééquilibrage, en vous référant aux guides communautaires ou aux documents de référence pour garantir la cohérence.
+
+5. **Mapping des statistiques (enums.js, statCalculatorEng_us.json, statTypeMap.js) :**  
+   - Vérifiez que les mappings correspondent aux statistiques réellement utilisées dans votre moteur de calcul.  
+   - Si vous ajoutez de nouvelles statistiques ou changez la nomenclature, mettez à jour ces fichiers pour que toutes les conversions et affichages soient corrects.
+
+─────────────────────────────  
+### 4. Conseils supplémentaires et bonnes pratiques
+
+- **Versionnage et tests :**  
+  Après modification, effectuez des tests fonctionnels sur quelques personnages et templates afin de vérifier que les nouvelles valeurs se traduisent comme attendu dans l’optimisation des mods et le calcul des statistiques.
+
+- **Documentation interne :**  
+  Commentez chaque changement apporté pour faciliter la maintenance et éviter toute confusion sur l’origine des valeurs. Utilisez les références indiquées dans `statRoll.js` pour justifier les valeurs de roll par rareté.
+
+- **Utilisation de clones d’instances :**  
+  Lorsque vous réutilisez des stratégies (via `rename` ou réassignement depuis `optimizationStrategy`), vérifiez que la mise à jour d’une valeur ne génère pas d’effets de bord sur les personnages déjà configurés. L’utilisation d’objets gelés (`Object.freeze`) aide à éviter ces erreurs mais il faut tenir compte de l’héritage lors de l’application des stratégies.
+
+─────────────────────────────  
+### 5. Conclusion
+
+L’architecture proposée permet une configuration centralisée et modulaire des statistiques, stratégies d’optimisation et cibles de mod pour chaque personnage. En ajustant soigneusement les valeurs dans les différents modules (de `optimizationStrategy.js` à `statRoll.js`), vous pouvez affiner les performances de vos personnages dans divers scénarios (PvP, PvE, raids, etc.). Ce guide vous offre la feuille de route pour modifier et tester les valeurs afin de parvenir à un équilibrage optimal dans votre système.
+
+N’hésitez pas à revenir vers moi pour toute clarification ou approfondissement sur certains aspects spécifiques.

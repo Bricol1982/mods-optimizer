@@ -32,7 +32,7 @@ class App extends PureComponent {
   constructor(props) {
     super(props);
 
-    // If an ally code is passed in to the app, then fetch data for that ally code immediately
+    // Si un code d'alliance est passé dans l'URL, récupérer immédiatement les données pour ce code
     const queryParams = new URLSearchParams(document.location.search);
 
     if (queryParams.has('allyCode')) {
@@ -45,10 +45,10 @@ class App extends PureComponent {
       }
     }
 
-    // Remove the query string after reading anything we needed from it.
+    // Supprimer la chaîne de requête après lecture des informations nécessaires.
     window.history.replaceState({}, document.title, document.location.href.split('?')[0]);
 
-    // Check the current version of the app against the API
+    // Vérifier la version actuelle de l'application par rapport à l'API
     props.checkVersion();
   }
 
@@ -67,15 +67,15 @@ class App extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // Once we get a profile, check to see if the previous version is such that we should show the change log
+    // Dès que nous obtenons un profil, vérifier si la version précédente nécessite d'afficher le journal des modifications
     if ((this.props.previousVersion < '1.8') && (!prevProps.profile && this.props.profile)) {
       this.props.showModal('changelog-modal', this.changeLogModal());
     }
   }
 
   /**
-   * Read a file as input and pass its contents to another function for processing
-   * @param fileInput The uploaded file
+   * Lit un fichier en entrée et transmet son contenu à une autre fonction pour traitement
+   * @param fileInput Le fichier téléchargé
    * @param handleResult Function string => *
    */
   readFile(fileInput, handleResult) {
@@ -119,8 +119,8 @@ class App extends PureComponent {
   }
 
   /**
-   * Renders the header for the application, optionally showing navigation buttons and a reset button
-   * @param showActions bool If true, render the "Explore" and "Optimize" buttons and the "Reset Mods Optimizer" button
+   * Affiche l'en-tête de l'application, en affichant éventuellement les boutons de navigation et un bouton de réinitialisation
+   * @param showActions bool Si vrai, affiche les boutons "Explorer" et "Optimiser" ainsi que le bouton "Réinitialiser l'Optimiseur de Mods"
    * @returns JSX Element
    */
   header(showActions) {
@@ -128,42 +128,42 @@ class App extends PureComponent {
 
     return <header className={'App-header'}>
       <h1 className={'App-title'}>
-        Grandivory's Mods Optimizer <span className="subtitle">for Star Wars: Galaxy of Heroes™</span>
+        Bricol's Mods Optimizer <span className="subtitle">Star Wars: Galaxy of Heroes™</span>
       </h1>
       {showActions &&
         <nav>
           <button className={'explore' === this.props.section ? 'active' : ''}
-            onClick={() => this.props.changeSection('explore')}>Explore my mods
-        </button>
+            onClick={() => this.props.changeSection('explore')}>Explorer mes mods
+          </button>
           <button className={'optimize' === this.props.section ? 'active' : ''}
-            onClick={() => this.props.changeSection('optimize')}>Optimize my mods
-        </button>
+            onClick={() => this.props.changeSection('optimize')}>Optimiser mes mods
+          </button>
         </nav>
       }
       <div className={'actions'}>
-        <label htmlFor={'ally-code'}>{this.props.allyCode ? 'Player' : 'Ally code'}:</label>
-        {/* If there is no active ally code, then show the regular input field */}
+        <label htmlFor={'ally-code'}>{this.props.allyCode ? 'Joueur' : 'Code d’alliance'}:</label>
+        {/* S'il n'y a pas de code d'alliance actif, afficher le champ de saisie */}
         {!this.props.allyCode &&
           <input id={'ally-code'} type={'text'} inputMode={'numeric'} size={12} ref={input => allyCodyInput = input}
             onKeyUp={(e) => {
               if (e.key === 'Enter') {
                 this.props.refreshPlayerData(e.target.value, this.props.keepOldMods, null);
               }
-              // Don't change the input if the user is trying to select something
+              // Ne pas modifier la saisie si l'utilisateur essaie de sélectionner
               if (window.getSelection().toString() !== '') {
                 return;
               }
-              // Don't change the input if the user is hitting the arrow keys
+              // Ne pas modifier la saisie si l'utilisateur appuie sur les touches fléchées
               if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
                 return;
               }
 
-              // Format the input field
+              // Formater le champ de saisie
               e.target.value = formatAllyCode(e.target.value);
             }}
           />
         }
-        {/* If there is an active ally code, show a dropdown */}
+        {/* S'il y a un code d'alliance actif, afficher un menu déroulant */}
         {this.props.allyCode &&
           <Dropdown
             id={'ally-code'}
@@ -178,7 +178,7 @@ class App extends PureComponent {
             {Object.entries(this.props.playerProfiles).map(([allyCode, playerName]) =>
               <option key={allyCode} value={allyCode}>{playerName}</option>
             )}
-            <option key={'new'} value={''}>New Code...</option>
+            <option key={'new'} value={''}>Nouveau code...</option>
           </Dropdown>
         }
         {this.props.allyCode &&
@@ -187,7 +187,7 @@ class App extends PureComponent {
             onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
           >
             X
-        </button>
+          </button>
         }
         <div className="fetch-actions">
           <button type={'button'}
@@ -198,8 +198,8 @@ class App extends PureComponent {
                 null
               );
             }}>
-            Fetch my data!
-        </button>
+            Récupérer mes données !
+          </button>
           <button
             type={'button'}
             disabled={!(
@@ -212,9 +212,9 @@ class App extends PureComponent {
                 this.props.showModal('pull-unequipped-modal', this.fetchUnequippedModal())
               }
             }}>
-            Fetch with HotUtils
-        </button>
-          <Help header={'How do I pull unequipped mods?'}>{this.unequippedModsHelp()}</Help>
+            Récupérer avec HotUtils
+          </button>
+          <Help header={'Comment récupérer les mods non équipés ?'}>{this.unequippedModsHelp()}</Help>
           <div className="form-item">
             <input id={'keep-old-mods'}
               name={'keep-old-mods'}
@@ -223,18 +223,18 @@ class App extends PureComponent {
               checked={this.props.keepOldMods}
               onChange={() => this.props.toggleKeepOldMods()}
             />
-            <label htmlFor={'keep-old-mods'}>Remember existing mods</label>
+            <label htmlFor={'keep-old-mods'}>Conserver les mods existants</label>
           </div>
         </div>
         <div className="state-actions">
-          <FileInput label={'Restore my progress'} handler={(file) => this.readFile(file, this.props.restoreProgress)} />
+          <FileInput label={'Restaurer ma progression'} handler={(file) => this.readFile(file, this.props.restoreProgress)} />
           {showActions &&
             <button type={'button'} onClick={() => {
               this.props.exportDatabase(progressData => {
                 progressData.version = this.props.version;
                 progressData.allyCode = this.props.allyCode;
 
-                // Remove the HotUtils session ID from the output
+                // Supprimer l'ID de session HotUtils de la sortie
                 progressData.profiles.forEach(profile => delete profile.hotUtilsSessionId)
 
                 const progressDataSerialized = JSON.stringify(progressData);
@@ -242,14 +242,14 @@ class App extends PureComponent {
                 saveAs(userData, `modsOptimizer-${(new Date()).toISOString().slice(0, 10)}.json`);
               });
             }}>
-              Save my progress
-        </button>
+              Enregistrer ma progression
+            </button>
           }
           {showActions &&
             <button type={'button'} className={'red'}
               onClick={() => this.props.showModal('reset-modal', this.resetModal())}>
-              Reset Mods Optimizer
-        </button>
+              Réinitialiser l'Optimiseur de Mods
+            </button>
           }
         </div>
       </div>
@@ -257,24 +257,24 @@ class App extends PureComponent {
   }
 
   /**
-   * Renders the footer for the application
+   * Affiche le pied de page de l'application
    * @returns JSX Element
    */
   footer() {
     return <footer className={'App-footer'}>
-      Star Wars: Galaxy of Heroes™ is owned by EA and Capital Games. This site is not affiliated with them.<br />
+      Star Wars: Galaxy of Heroes™ appartient à EA et Capital Games. Ce site n'est pas affilié à ces sociétés.<br />
       <a href={'https://github.com/grandivory/mods-optimizer'} target={'_blank'} rel={'noopener noreferrer'}>
-        Contribute
+        Contribuer
       </a>
       &nbsp;|&nbsp;
-      Ask for help or give feedback on <a href={'https://discord.gg/WFKycSm'} target={'_blank'} rel={'noopener noreferrer'}>
+      Demandez de l'aide ou laissez vos commentaires sur <a href={'https://discord.gg/WFKycSm'} target={'_blank'} rel={'noopener noreferrer'}>
         Discord
       </a>
-      &nbsp;| Like the tool? Consider donating to support the developer!&nbsp;
+      &nbsp;| Vous aimez l'outil ? Pensez à faire un don pour soutenir le développeur !&nbsp;
       <a href={'https://paypal.me/grandivory'} target={'_blank'} rel={'noopener noreferrer'} className={'gold'}>
         Paypal
       </a>
-      &nbsp;or&nbsp;
+      &nbsp;ou&nbsp;
       <a href={'https://www.patreon.com/grandivory'} target={'_blank'} rel={'noopener noreferrer'} className={'gold'}>
         Patreon
       </a>
@@ -287,43 +287,42 @@ class App extends PureComponent {
   }
 
   /**
-   * Renders the welcome screen for when someone first opens the application
+   * Affiche l'écran d'accueil pour un premier accès à l'application
    * @returns JSX Element
    */
   welcome() {
     return <div className={'welcome'}>
-      <h2>Welcome to Grandivory's Mods Optimizer for Star Wars: Galaxy of Heroes™!</h2>
+      <h2>Bienvenue sur l'Optimiseur de Mods de Grandivory modifié par Bricol pour Star Wars: Galaxy of Heroes™ !</h2>
       <p>
-        This application will allow you to equip the optimum mod set on every character you have by assigning
-        a value to each stat that a mod can confer. You'll give it a list of characters to optimize along
-        with the stats that you're looking for, and it will determine the best mods to equip, one character at a
-        time, until your list is exhausted.
-      </p>
+        Cette application vous permettra d'équiper l'ensemble optimal de mods sur chacun de vos personnages en attribuant
+		une valeur à chaque statistique qu'un mod peut conférer. Vous indiquerez une liste de personnages à optimiser ainsi
+		que les statistiques recherchées, et l'outil déterminera les meilleurs mods à équiper, personnage par personnage,
+		jusqu'à épuisement de votre liste.
+	  </p>
       <p>
-        To get started, enter your ally code in the box in the header and click "Get my mods!". Note that your mods
-        will only be updated a maximum of once per hour.
+        Pour démarrer, saisissez votre code d’alliance dans le champ en haut et cliquez sur "Récupérer mes données !".
+		Notez que vos mods ne seront mis à jour qu'une fois par heure au maximum.											
       </p>
     </div>;
   }
 
   /**
-   * Renders a popup describing the changes from the previous version, and any actions that the user needs to take.
+   * Affiche une fenêtre modale décrivant les changements par rapport à la version précédente, et les actions à entreprendre par l'utilisateur.
    * @returns JSX Element
    */
   changeLogModal() {
     return <div>
-      <h2 className={'gold'}>Grandivory's Mods Optimizer has updated to version 1.8!</h2>
-      <h3>Here's a short summary of the changes included in this version:</h3>
+      <h2 className={'gold'}>L'Optimiseur de Mods de Grandivory 1.8.53 develop a été forké par Bricol  !</h2>
+      <h3>Voici un résumé des changements apportés dans cette version :</h3>
       <ul>
         <li>
-          Updated the integration with <a href={'https://www.hotutils.com'} target={'_blank'} rel={'noopener noreferrer'}>HotUtils</a> to version 2! This brings some great advantages to both HotUtils
-          subscribers and non-subscribers. ALL players can now fetch their mod
-          data <strong>as often as they'd like</strong>, with no cooldown between fetches! A HotUtils subscription is
-          still required to fetch unequipped mods. A progress bar is now also shown when using HotUtils to move your
-          mods in-game, and that move can be cancelled at any time!
+          Intégration mise à jour avec <a href={'https://www.hotutils.com'} target={'_blank'} rel={'noopener noreferrer'}>HotUtils</a> en version 2 ! Cela apporte de nombreux avantages aux abonnés comme aux non-abonnés.
+		  Tous les joueurs peuvent désormais récupérer leurs données de mods <strong>aussi souvent qu'ils le souhaitent</strong>, sans période de repos entre les récupérations ! Un abonnement HotUtils est toujours requis pour récupérer les mods non équipés.																	  
+		  Une barre de progression est également désormais affichée lors du déplacement de vos mods en jeu via HotUtils																											 
+		  et cette opération peut être annulée à tout moment !																											
         </li>
       </ul>
-      <h3>Happy Modding!</h3>
+      <h3>Bon modding !</h3>
       <div className={'actions'}>
         <button type={'button'} onClick={() => this.props.hideModal()}>OK</button>
       </div>
@@ -331,49 +330,49 @@ class App extends PureComponent {
   }
 
   /**
-   * Renders the "Are you sure?" modal for resetting the app
+   * Affiche le modal "Êtes-vous sûr ?" pour réinitialiser l'application
    * @returns JSX Element
    */
   resetModal() {
     return <div>
-      <h2>Reset the mods optimizer?</h2>
+      <h2>Réinitialiser l'Optimiseur de Mods ?</h2>
       <p>
-        If you click "Reset", everything that the application currently has saved - your mods,
-        character configuration, selected characters, etc. - will all be deleted.
-        Are you sure that's what you want?
+        Si vous cliquez sur "Réinitialiser", toutes les données actuellement enregistrées par l'application – vos mods,
+        la configuration des personnages, la sélection des personnages, etc. – seront supprimées.
+        Êtes-vous sûr de vouloir procéder ?
       </p>
       <div className={'actions'}>
-        <button type={'button'} onClick={() => this.props.hideModal()}>Cancel</button>
-        <button type={'button'} className={'red'} onClick={() => this.props.reset()}>Reset</button>
+        <button type={'button'} onClick={() => this.props.hideModal()}>Annuler</button>
+        <button type={'button'} className={'red'} onClick={() => this.props.reset()}>Réinitialiser</button>
       </div>
     </div>;
   }
 
   /**
-   * Renders a modal with a form for adding a new ally code
+   * Affiche un modal avec un formulaire pour ajouter un nouveau code d'alliance
    */
   addAllyCodeModal() {
     let allyCodeInput;
 
     return <div className={'add-ally-code-form'}>
-      <h4>Add a new Ally Code</h4>
-      <label htmlFor={'new-ally-code'}>Ally code: </label>
+      <h4>Ajouter un nouveau code d'alliance</h4>
+      <label htmlFor={'new-ally-code'}>Code d'alliance : </label>
       <input id={'new-ally-code'} type={'text'} inputMode={'numeric'} size={13} ref={input => allyCodeInput = input}
         onKeyUp={(e) => {
           if (e.key === 'Enter') {
             this.props.hideModal();
             this.props.refreshPlayerData(e.target.value, false, null);
           }
-          // Don't change the input if the user is trying to select something
+          // Ne pas modifier la saisie si l'utilisateur essaie de sélectionner
           if (window.getSelection().toString() !== '') {
             return;
           }
-          // Don't change the input if the user is hitting the arrow keys
+          // Ne pas modifier la saisie si l'utilisateur appuie sur les touches fléchées
           if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
             return;
           }
 
-          // Format the input field
+          // Formater le champ de saisie
           e.target.value = formatAllyCode(e.target.value);
         }}
       />
@@ -383,53 +382,52 @@ class App extends PureComponent {
             this.props.hideModal();
             this.props.refreshPlayerData(allyCodeInput.value, false, null);
           }}>
-          Fetch my data!
+          Récupérer mes données !
         </button>
       </div>
     </div>
   }
 
   /**
-   * Renders the "Are you sure?" modal for deleting an ally code
+   * Affiche le modal "Êtes-vous sûr ?" pour supprimer un code d'alliance
    */
   deleteAllyCodeModal() {
     return <div>
-      <h2>Delete <strong>{formatAllyCode(this.props.allyCode)}</strong>?</h2>
-      <p>This will delete the ally code, all of its mods, character selections, and targets from stored data.</p>
-      <p>You will be able to restore the character and mod data by fetching with this ally code again.</p>
-      <p>Are you sure you want to delete this code?</p>
+      <h2>Supprimer <strong>{formatAllyCode(this.props.allyCode)}</strong> ?</h2>
+      <p>Cela supprimera le code d'alliance, ainsi que tous les mods, la sélection de personnages et les cibles associés.</p>
+      <p>Vous pourrez restaurer les données en réimportant ce code.</p>
+      <p>Êtes-vous sûr de vouloir supprimer ce code ?</p>
       <div className={'actions'}>
-        <button type={'button'} onClick={() => this.props.hideModal()}>Cancel</button>
+        <button type={'button'} onClick={() => this.props.hideModal()}>Annuler</button>
         <button type={'button'} className={'red'}
           onClick={() => {
             this.props.hideModal();
             this.props.deleteProfile(this.props.allyCode);
           }}>
-          Delete
+          Supprimer
         </button>
       </div>
     </div>;
   }
 
   /**
-   * Renders a modal stating that pulling unequipped mods using HotUtils will log you out of the game
+   * Affiche un modal indiquant que la récupération des mods non équipés via HotUtils vous déconnectera du jeu
    */
   fetchUnequippedModal() {
     return <div key={'hotutils-move-mods-modal'}>
-      <h2>Fetch your unequipped mods using HotUtils</h2>
+      <h2>Récupérer vos mods non équipés via HotUtils</h2>
       <p>
-        This will fetch all of your player data, including unequipped mods by using HotUtils.
-        Please note that <strong className={'gold'}>
-          this action will log you out of Galaxy of Heroes if you are currently logged in
+        Cela récupérera toutes vos données, y compris les mods non équipés, en utilisant HotUtils.
+        Veuillez noter que <strong className={'gold'}>
+          cette action vous déconnectera de Galaxy of Heroes si vous y êtes connecté
         </strong>.
       </p>
       <p>
-        <strong>Use at your own risk!</strong> HotUtils functionality breaks the terms of service for Star Wars:
-        Galaxy of Heroes. You assume all risk in using this tool. Grandivory's Mods Optimizer is not associated with
-        HotUtils.
+        <strong>Utilisez cette fonctionnalité à vos risques et périls !</strong> La fonctionnalité HotUtils contrevient aux conditions d'utilisation de Star Wars:
+        Galaxy of Heroes. Vous assumez l'entière responsabilité en l'utilisant. L'Optimiseur de Mods de Grandivory n'est pas associé à HotUtils.
       </p>
       <div className={'actions'}>
-        <button type={'button'} className={'red'} onClick={this.props.hideModal}>Cancel</button>
+        <button type={'button'} className={'red'} onClick={this.props.hideModal}>Annuler</button>
         <button type={'button'} onClick={() => {
           this.props.hideModal();
           this.props.refreshPlayerData(
@@ -439,26 +437,25 @@ class App extends PureComponent {
             true
           );
         }}>
-          Fetch my data
+          Récupérer mes données
         </button>
       </div>
-    </div >;
+    </div>;
   }
 
   /**
-   * Renders a help description for pulling unequipped mods with HotUtils
+   * Affiche une aide concernant la récupération des mods non équipés avec HotUtils
    */
   unequippedModsHelp() {
     return <div className={'help'}>
       <p>
-        HotUtils is another tool for SWGOH that allows you to directly modify your game account. One of the advantages
-        of being a subscriber to HotUtils is that it can pull all of your mod data, including unequipped mods, at any
-        time, and without any cooldown period. Normally, your player and mod data can only be updated once every hour.
+        HotUtils est un autre outil pour SWGOH qui permet de modifier directement votre compte. Un de ses avantages, pour les abonnés,
+        est de pouvoir récupérer toutes vos données de mods, y compris les mods non équipés, à tout moment, sans limitation d'intervalle..
+		 Normalement, vos données de joueur et de mods ne peuvent être actualisées qu'une fois par heure																											  
       </p>
       <p>
-        <strong>Use at your own risk!</strong> HotUtils functionality breaks the terms of service for Star Wars:
-        Galaxy of Heroes. You assume all risk in using this tool. Grandivory's Mods Optimizer is not associated with
-        HotUtils.
+        <strong>Utilisez cette fonctionnalité à vos risques et périls !</strong> Elle contrevient aux conditions d'utilisation de Star Wars:
+        Galaxy of Heroes. Vous assumez l'entière responsabilité en l'utilisant. L'Optimiseur de Mods de Grandivory n'est pas associé à HotUtils.
       </p>
       <p><a href={'https://www.hotutils.com/'} target={'_blank'} rel={'noopener noreferrer'}>
         https://www.hotutils.com/
@@ -492,7 +489,7 @@ const mapStateToProps = (state) => {
   return appProps;
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   changeSection: newSection => dispatch(changeSection(newSection)),
   refreshPlayerData: (allyCode, keepOldMods, sessionId, useSession = true) =>
     dispatch(refreshPlayerData(allyCode, keepOldMods, sessionId, useSession)),
