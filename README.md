@@ -23,6 +23,17 @@ Pour commencer à utiliser l’optimiseur, vous devez d’abord avoir Node (et N
 site officiel [https://nodejs.org/en/download/] ou utiliser un gestionnaire de paquets comme Homebrew sur
 Mac (`brew install node`) si vous l’avez déjà.
 
+
+npm install -g serve
+npm update
+npm audit fix
+npm install
+npm run build
+serve -s build
+ctrl+c
+npm start
+
+
 Une fois Node installé, exécutez `npm install` à la racine du dépôt. Cela installera toutes les dépendances nécessaires.
 
 Pour lancer l’application, tapez `npm start` dans le terminal. Cela démarrera un serveur local à `https://localhost:3000`
