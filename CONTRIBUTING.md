@@ -1,44 +1,41 @@
-# Contributing to Grandivory's Mods Optimizer
+# Contribuer à l'Optimiseur de Mods de Grandivory
 
-## Scope of changes
-No change is too small to be considered a worthwhile contribution! Even if you're only
-changing one line of code, it can save time and bring value to the tool faster than if
-you don't contribute. Go for it!
+## Portée des modifications
+Aucune modification n’est trop petite pour être considérée comme une contribution valable !
+Même si vous ne changez qu’une seule ligne de code, cela peut faire gagner du temps et apporter
+de la valeur à l’outil plus rapidement que si vous ne contribuez pas. Allez-y !
 
-If you want to change a very large section of the code, then expect some
-back-and-forth before your pull request is accepted. It means that I'm interested in
-what you're doing and want to make it as good as possible - not that I'm trying to
-prevent you from contributing. 
+Si vous souhaitez modifier une grande partie du code, attendez-vous à un peu d’allers-retours avant que
+votre pull request soit acceptée. Cela signifie simplement que ce que vous faites m’intéresse et que
+je veux que ce soit aussi bon que possible – ce n’est pas une tentative de vous décourager de contribuer.
 
-## Getting started
-To get started contributing to the mods optimizer, first fork the repository. Once
-you have your own copy of the repository, start making changes and committing them to
-a new branch (or to your own `develop` branch, if you wish). Once your changes are
-ready, open up a pull request back to the original repository.
+## Premiers pas
+Pour commencer à contribuer à l’optimiseur de mods, commencez par forker le dépôt.
+Une fois que vous avez votre propre copie du dépôt, commencez à apporter des modifications
+et à les valider dans une nouvelle branche (ou dans votre branche `develop`, si vous préférez).
+Une fois vos modifications prêtes, ouvrez une pull request vers le dépôt original.
 
-## Commit messages
-Commit messages should follow the format of:
+## Messages de commit
+Les messages de commit doivent suivre ce format :
 ```
-Simple description of change (<50 characters)
+Brève description du changement (<50 caractères)
 
-Longer description (if necessary) of what changed, and why. Also include any caveats
-for the new code or known issues / incomplete sections.
+Description plus longue (si nécessaire) de ce qui a changé et pourquoi. Incluez également toute mise
+en garde concernant le nouveau code ou tout problème connu / section incomplète.
 ```
 
-This makes changes easy to parse from just reading the commit log.
+Cela permet de comprendre facilement les changements rien qu’en lisant l’historique des commits.
 
 ## Pull requests
-Once you think that your changes are ready to be merged, open a pull request back to
-the `develop` branch on `grandivory/mods-optimizer`. This will notify me that the
-changes are ready, and will start the review process. I try to be somewhat relaxed in
-any changes I request, and will often make requested changes myself to make the whole
-contribution process as quick and easy as possible.
+Lorsque vous pensez que vos modifications sont prêtes à être fusionnées, ouvrez une pull request vers
+la branche `develop` sur `grandivory/mods-optimizer`. Cela m’avertira que les modifications sont prêtes
+et lancera le processus de relecture. J’essaie d’être assez détendu sur les modifications demandées
+et je les fais souvent moi-même pour que le processus de contribution soit aussi rapide et simple que possible.
 
-## Linting and Testing
-All code contributions to the mods optimizer should pass linting (`npm lint`). If
-there are any changes or additions to functionality, then new tests should also be
-written (this rule will only be enforced once I myself have added tests). All
-existing tests should also pass. Eventually, I plan to make these checks part of the
-commit hooks, so they will run automatically as soon as code is pushed or a pull
-request is opened. For now, I may request changes to make these pass if they fail on
-an opened pull request.
+## Linting et Tests
+Toutes les contributions au code de l’optimiseur de mods doivent passer le linting (`npm lint`).
+S’il y a des modifications ou des ajouts de fonctionnalités, de nouveaux tests doivent également
+être écrits (cette règle ne sera appliquée qu’une fois que j’aurai moi-même ajouté des tests). Tous
+les tests existants doivent également passer. À terme, je prévois d’automatiser ces vérifications dans
+les hooks de commit, afin qu’elles s’exécutent dès qu’un code est poussé ou qu’une pull request est ouverte.
+Pour l’instant, je pourrai demander des modifications pour que tout passe correctement si les vérifications échouent.

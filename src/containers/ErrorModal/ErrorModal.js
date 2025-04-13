@@ -1,26 +1,29 @@
-import Modal from "../../components/Modal/Modal";
-import React from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
+import Modal from "../../components/Modal/Modal";
 import WarningLabel from "../../components/WarningLabel/WarningLabel";
 import { hideError } from "../../state/actions/app";
 
-class ErrorModal extends Modal {
+class ErrorModal extends Component {
   render() {
     if (!this.props.content) {
       return null;
     }
-
-    return <div className={'overlay'}>
-      <div className={'modal error-modal'}>
-        <WarningLabel />
-        <h2 key={'error-header'}>Error!</h2>
-        <div key={'error-message'}>{this.props.content}</div>
-        <div key={'error-actions'} className={'actions'}>
-          <button type={'button'} onClick={this.props.close}>Ok</button>
+    
+    return (
+      <Modal>
+        <div className="overlay">
+          <div className="modal error-modal">
+            <WarningLabel />
+            <h2>Error!</h2>
+            <div>{this.props.content}</div>
+            <div className="actions">
+              <button type="button" onClick={this.props.close}>Ok</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>;
-
+      </Modal>
+    );
   }
 }
 
@@ -32,4 +35,4 @@ const mapDispatchToProps = dispatch => ({
   close: () => dispatch(hideError())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ErrorModal)
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorModal);

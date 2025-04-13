@@ -125,21 +125,19 @@ export function restoreState() {
  * @param state {object}
  */
 export function serializeState(state) {
-  if (null === state || undefined === typeof state) {
+  if (state === null || typeof state === 'undefined') {
     return null;
-  } else if ('function' === typeof state.serialize) {
+  } else if (typeof state.serialize === 'function') {
     return state.serialize();
-  } else if (state instanceof Array) {
+  } else if (Array.isArray(state)) {
     return state.map(item => serializeState(item));
   } else if (state instanceof Object) {
-    return mapObject(
-      state,
-      stateValue => serializeState(stateValue)
-    );
+    return mapObject(state, stateValue => serializeState(stateValue));
   } else {
     return state;
   }
 }
+
 
 /**
  * Convert the state from a serialized representation to the in-memory representation used by the app

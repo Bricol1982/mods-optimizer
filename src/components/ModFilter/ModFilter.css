@@ -57,7 +57,7 @@
 }
 
 .mod-filters .option-image.shape {
-  background-image: url('/img/empty-mod-shapes.png');
+  background-image: url("../../img/empty-mod-shapes.png");
   background-size: 15em 5em;
 }
 
@@ -82,7 +82,7 @@
 }
 
 .mod-filters .option-image.set {
-  background-image: url('/img/icon-buffs.png');
+  background-image: url('../../img/icon-buffs.png');
   background-size: 20em 5em;
 }
 

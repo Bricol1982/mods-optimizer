@@ -115,7 +115,7 @@
   width: 4em;
   height: 4em;
   margin: auto;
-  background-image: url('/img/mod-shape-atlas.png');
+  background-image: url('../../img/mod-shape-atlas.png');
   background-size: 48em 20em;
 }
 

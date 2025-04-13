@@ -124,7 +124,7 @@ html, body {
   grid-column: 1;
   font-size: 1.5em;
   margin: .5em;
-  background-image: url('/img/gold-crit-dmg-arrow-mod-cropped.png');
+  background-image: url('../../img/gold-crit-dmg-arrow-mod-cropped.png');
   background-position: 0 50%;
   background-repeat: no-repeat;
   background-size: 2em 2em;
@@ -213,7 +213,7 @@ html, body {
 .app-body {
   flex: 1 1 auto;
   display: flex;
-  background: black url('/img/cantina-background.jpg') no-repeat fixed;
+  background: black url('../../img/cantina-background.jpg') no-repeat fixed;
   background-size: cover;
   overflow: hidden;
   color: white;

@@ -4,7 +4,7 @@ import React from 'react';
 import Pips from '../Pips/Pips';
 import './ModImage.css';
 import CharacterAvatar from "../CharacterAvatar/CharacterAvatar";
-import connect from "react-redux/es/connect/connect";
+import { connect } from 'react-redux';
 
 class ModImage extends React.PureComponent {
 
