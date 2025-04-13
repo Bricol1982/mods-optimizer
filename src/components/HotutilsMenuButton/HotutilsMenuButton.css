@@ -1,0 +1,65 @@
+/* src/components/HotutilsMenuButton/HotutilsMenuButton.css */
+.hotutils-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.hotutils-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5em;
+}
+
+.hotutils-logo {
+  width: 24px;
+  height: 24px;
+  /* Ajustez la taille selon vos besoins */
+}
+
+.hotutils-menu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background-color: #333;
+  border: 1px solid #888;
+  border-radius: 4px;
+  padding: 0.5em;
+  z-index: 100;
+  min-width: 180px;
+}
+
+.hotutils-menu-item {
+  background: none;
+  border: none;
+  color: #fff;
+  padding: 0.5em;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+}
+
+.hotutils-menu-item:hover {
+  background-color: #444;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-item label {
+  margin: 0;
+  font-size: 0.9em;
+  color: #fff;
+}
+
+.checkbox-item input {
+  margin-right: 0.5em;
+}
+
+.help-item {
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  color: #bbb;
+}

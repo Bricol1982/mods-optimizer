@@ -852,6 +852,17 @@ mods-optimizer/
 │   │   │   └── Database.js
 │   │   ├── storage.js
 │   │   └── store.js
+│   ├── themes
+│   │   ├── blueTheme.js
+│   │   ├── customTheme.js
+│   │   ├── darkTheme.js
+│   │   ├── darthvadorTheme.js
+│   │   ├── defaultTheme.js
+│   │   ├── greenTheme.js
+│   │   ├── index.js
+│   │   ├── lightTheme.js
+│   │   ├── redTheme.js
+│   │   └── yodaTheme.js
 │   ├── utils
 │   │   ├── areObjectsEquivalent.js
 │   │   ├── chooseFromArray.js
@@ -879,8 +890,8 @@ mods-optimizer/
 ├── arborescence_complete.txt
 ├── arborescence_folders.txt
 ├── arborescence_folders_only.py
+├── arborescence_no_node.py
 ├── arborescence_no_node.txt
-├── arborescence_no_nodemodules.py
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
 ├── jsconfig.json
@@ -890,6 +901,4 @@ mods-optimizer/
 ├── package-lock.json
 ├── package.json
 ├── README.md
-├── tree-enhanced.ps1
-├── tree.txt
 └── version.py

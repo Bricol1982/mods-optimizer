@@ -1,0 +1,24 @@
+.save-progress-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5em;
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .save-icon {
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .spinning {
+    animation: spin 1s linear infinite;
+  }
+  

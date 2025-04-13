@@ -1,0 +1,23 @@
+.reset-optimizer-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5em;
+  display: inline-flex;
+  align-items: center;
+  /* Ajout d'une ombre portée pour renforcer l'effet d'urgence */
+  box-shadow: 0 0 4px rgba(255, 0, 0, 0.6);
+  border-radius: 4px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.reset-optimizer-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+}
+
+.reset-icon {
+  fill: #ff0000; /* Rouge vif pour attirer l'attention */
+  width: 32px;
+  height: 32px;
+}

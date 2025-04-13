@@ -497,3 +497,17 @@ img.fit {
 .form-item {
   display: inline-block;
 }
+
+:root {
+  --background-color: #000000;
+  --text-color: #d3d3d3;
+  --font-family: sans-serif;
+  --accent-color: #d4af37;
+  --purple-color: #9b59b6;
+  --blue-color: #2980b9;
+  --green-color: #27ae60;
+  --gray-color: #bdc3c7;
+  --red-text-color: #e74c3c;
+  --decrease-color: #c0392b;
+  /* … Et ainsi de suite pour toutes les custom properties listées */
+}
