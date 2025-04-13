@@ -17,12 +17,12 @@ mods-optimizer/
 ├── build
 │   ├── static
 │   │   ├── css
-│   │   │   ├── main.9b02bf79.css
-│   │   │   └── main.9b02bf79.css.map
+│   │   │   ├── main.5fa14317.css
+│   │   │   └── main.5fa14317.css.map
 │   │   ├── js
-│   │   │   ├── main.3256a7f3.js
-│   │   │   ├── main.3256a7f3.js.LICENSE.txt
-│   │   │   └── main.3256a7f3.js.map
+│   │   │   ├── main.4ae7ae6e.js
+│   │   │   ├── main.4ae7ae6e.js.LICENSE.txt
+│   │   │   └── main.4ae7ae6e.js.map
 │   │   └── media
 │   │       ├── cantina-background.552e0fce6826eee640bb.jpg
 │   │       ├── character_icons.06c21bd0224a10921ee7.png
@@ -656,6 +656,9 @@ mods-optimizer/
 │   │   ├── Help
 │   │   │   ├── Help.css
 │   │   │   └── Help.js
+│   │   ├── HotutilsMenuButton
+│   │   │   ├── HotutilsMenuButton.css
+│   │   │   └── HotutilsMenuButton.js
 │   │   ├── Modal
 │   │   │   ├── FlashMessage.js
 │   │   │   ├── Modal.css
@@ -701,6 +704,15 @@ mods-optimizer/
 │   │   ├── RangeInput
 │   │   │   ├── RangeInput.css
 │   │   │   └── RangeInput.js
+│   │   ├── ResetOptimizerButton
+│   │   │   ├── ResetOptimizerButton.css
+│   │   │   └── ResetOptimizerButton.js
+│   │   ├── RestoreProgressButton
+│   │   │   ├── RestoreProgressButton.css
+│   │   │   └── RestoreProgressButton.js
+│   │   ├── SaveProgressButton
+│   │   │   ├── SaveProgressButton.css
+│   │   │   └── SaveProgressButton.js
 │   │   ├── SellModButton
 │   │   │   └── SellModButton.js
 │   │   ├── Sidebar
@@ -712,6 +724,9 @@ mods-optimizer/
 │   │   ├── Spoiler
 │   │   │   ├── Spoiler.css
 │   │   │   └── Spoiler.js
+│   │   ├── SyncLogo
+│   │   │   ├── SyncLogo.css
+│   │   │   └── SyncLogo.js
 │   │   ├── Toggle
 │   │   │   ├── Toggle.css
 │   │   │   └── Toggle.js
@@ -730,10 +745,7 @@ mods-optimizer/
 │   ├── containers
 │   │   ├── App
 │   │   │   ├── App.css
-│   │   │   ├── App.en.js
-│   │   │   ├── App.fr.js
 │   │   │   ├── App.js
-│   │   │   ├── App.js.old
 │   │   │   ├── App.test.js
 │   │   │   └── boilerplate.css
 │   │   ├── CharacterEditForm
@@ -800,6 +812,7 @@ mods-optimizer/
 │   │   ├── gold-crit-dmg-arrow-mod-cropped.png
 │   │   ├── help.png
 │   │   ├── hotsauce512.png
+│   │   ├── hotsauceheader.png
 │   │   ├── icon-buffs.png
 │   │   ├── icon_buff_critchance.png
 │   │   ├── icon_buff_critdamage.png
@@ -880,7 +893,8 @@ mods-optimizer/
 │   │   ├── mapObject.js
 │   │   ├── nothing.js
 │   │   ├── objectFromEntries.js
-│   │   └── subjectiveScoring.js
+│   │   ├── subjectiveScoring.js
+│   │   └── themeExporter.js
 │   ├── index.css
 │   ├── index.js
 │   └── registerServiceWorker.js
