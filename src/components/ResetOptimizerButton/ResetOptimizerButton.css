@@ -1,23 +1,15 @@
+/* /src/components/ResetOptimizerButton/ResetOptimizerButton.css */
 .reset-optimizer-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5em;
-  display: inline-flex;
-  align-items: center;
-  /* Ajout d'une ombre portée pour renforcer l'effet d'urgence */
-  box-shadow: 0 0 4px rgba(255, 0, 0, 0.6);
-  border-radius: 4px;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.reset-optimizer-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+  display: inline-block;
+  margin: 0.25em;
 }
 
 .reset-icon {
-  fill: #ff0000; /* Rouge vif pour attirer l'attention */
-  width: 32px;
-  height: 32px;
+  display: block;            /* Pour occuper exactement l'espace défini */
+  width: 40px;               /* Même largeur que le modèle */
+  height: 40px;              /* Même hauteur que le modèle */
+  border-radius: 8px;        /* Coins arrondis */
+  object-fit: cover;         /* L'icône couvre tout le carré */
+  border: 2px solid #ffffff; /* Bordure visible, ici en blanc */
+  box-sizing: border-box;    /* La bordure est incluse dans les dimensions */
 }

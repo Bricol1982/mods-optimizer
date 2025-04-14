@@ -11,11 +11,29 @@
   padding: 0.5em;
 }
 
+/* On remplace l'ancienne règle de .hotutils-logo par celle-ci */
 .hotutils-logo {
-  width: 24px;
-  height: 24px;
-  /* Ajustez la taille selon vos besoins */
+  display: block;              /* Pour occuper exactement l'espace défini */
+  width: 48px;                 /* Taille souhaitée */
+  height: 48px;                /* Taille souhaitée */
+  border-radius: 8px;          /* Coins arrondis */
+  object-fit: cover;           /* L'image occupe tout l'espace sans déformer */
+  border: 2px solid #ffffff;   /* Bordure visible */
+  box-sizing: border-box;      /* Inclut la bordure dans les dimensions */
 }
+
+/* On supprime ou commente la règle .hotutils.logo si elle existe */
+/*
+.hotutils.logo {
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+  box-sizing: border-box;
+}
+*/
 
 .hotutils-menu {
   position: absolute;

@@ -1,26 +1,25 @@
-const yodaTheme = {
-  "--background-color": "#203733",       // Fond vert profond rappelant une forêt ancienne
-  "--text-color": "#d5e7dc",               // Texte clair pour un contraste harmonieux
+const defaultTheme = {
+  "--background-color": "#000000",
+  "--text-color": "#d3d3d3",
   "--font-family": "sans-serif",
-  "--accent-color": "#6abf69",             // Accent d'un vert vif et apaisant
+  "--accent-color": "#d4af37",
   "--purple-color": "#9b59b6",
   "--blue-color": "#2980b9",
-  "--green-color": "#4CAF50",              // Vert vibrant pour les éléments principaux
+  "--green-color": "#27ae60",
   "--gray-color": "#bdc3c7",
   "--red-text-color": "#e74c3c",
   "--decrease-color": "#c0392b",
-  "--header-background": "#2c5f4e",         // Header en vert sombre et naturel
-  "--header-text-color": "#d5e7dc",
-  "--header-border-color": "#1e4a3a",
-  "--title-subtitle-color": "#d5e7dc",
-  "--ally-code-input-color": "#6abf69",
-  "--footer-background": "#2c5f4e",         // Footer en harmonie avec le header
-  "--footer-text-color": "#d5e7dc",
-  "--footer-border-color": "#1e4a3a",
-  "--scrollbar-track-color": "#d5e7dc",
-  "--scrollbar-border-color": "#bdc3c7",
-  "--scrollbar-thumb-color": "#6abf69",
-  // Variables supplémentaires pour personnalisation ultérieure
+  "--header-background": "",
+  "--header-text-color": "",
+  "--header-border-color": "",
+  "--title-subtitle-color": "",
+  "--ally-code-input-color": "",
+  "--footer-background": "",
+  "--footer-text-color": "",
+  "--footer-border-color": "",
+  "--scrollbar-track-color": "",
+  "--scrollbar-border-color": "",
+  "--scrollbar-thumb-color": "",
   "--body-background-image": "",
   "--body-background-size": "",
   "--body-text-shadow": "",
@@ -102,5 +101,4 @@ const yodaTheme = {
   "--sidebar-child-background-color": "",
   "--sidebar-child-border-color": ""
 };
-
-export default yodaTheme;
+export default defaultTheme;

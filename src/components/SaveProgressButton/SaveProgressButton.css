@@ -1,24 +1,45 @@
-.save-progress-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5em;
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  .save-icon {
-    fill: currentColor;
-    width: 24px;
-    height: 24px;
-  }
-  
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  
-  .spinning {
-    animation: spin 1s linear infinite;
-  }
-  
+/* /src/components/RestoreProgressButton/RestoreProgressButton.css */
+.restore-progress-button {
+  display: inline-block;
+  margin: 0.25em;
+}
+
+/* Ajoutez ou modifiez cette section pour définir la taille de l'icône */
+.restore-icon {
+  display: block;            /* S'assure que l'élément occupe exactement l'espace défini */
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;        /* Coins arrondis */
+  object-fit: cover;         /* L'image couvre tout le carré */
+  border: 2px solid #ffffff; /* Bordure visible */
+  box-sizing: border-box;    /* La bordure est incluse dans les dimensions */
+}
+
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+/* Si votre composant utilise un label caché pour agir comme bouton (optionnel) */
+.restore-progress-label {
+  background-color: var(--button-background, #46801a);
+  border: 1px solid var(--button-border-color, limegreen);
+  color: white;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.restore-progress-label:hover {
+  opacity: 0.9;
+}
+
+.restore-progress-input {
+  display: none;
+}

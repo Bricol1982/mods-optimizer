@@ -1,9 +1,11 @@
 // @flow
-import React, { PureComponent } from 'react';
+
+import React, { PureComponent, createRef } from 'react';
 import './boilerplate.css';
 import './App.css';
 import OptimizerView from "../OptimizerView/OptimizerView";
 import ExploreView from "../ExploreView/ExploreView";
+import FileInput from "../../components/FileInput/FileInput";
 import Modal from "../../components/Modal/Modal";
 import Spinner from "../../components/Spinner/Spinner";
 import { connect } from "react-redux";
@@ -22,20 +24,30 @@ import { checkVersion, refreshPlayerData, toggleKeepOldMods, setHotUtilsSessionI
 import FlashMessage from "../../components/Modal/FlashMessage";
 import { saveAs } from 'file-saver';
 import { exportDatabase, loadProfile } from "../../state/actions/storage";
+import Help from '../../components/Help/Help';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
-import SyncLogo from '../../components/SyncLogo/SyncLogo';
-import SaveProgressButton from '../../components/SaveProgressButton/SaveProgressButton';
-import RestoreProgressButton from '../../components/RestoreProgressButton/RestoreProgressButton';
+import ThemeChanger from '../../components/ThemeChanger/ThemeChanger';
 import ResetOptimizerButton from '../../components/ResetOptimizerButton/ResetOptimizerButton';
+import RestoreProgressButton from '../../components/RestoreProgressButton/RestoreProgressButton';
+import SaveProgressButton from '../../components/SaveProgressButton/SaveProgressButton';
 import HotutilsMenuButton from '../../components/HotutilsMenuButton/HotutilsMenuButton';
-import { Tooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css'; // Ajoutez le CSS pour que les infobulles s'affichent correctement
-class App extends PureComponent {
+import themes from '../../themes';
 
+class App extends PureComponent {
   constructor(props) {
     super(props);
 
-    // Récupérer les paramètres d'URL pour un éventuel code d'alliance
+    // Initialisation du thème courant ainsi que des indicateurs pour l'état "restoring" et "saving"
+    this.state = {
+      currentThemeKey: 'blue',
+      restoring: false,
+      saving: false
+    };
+
+    // Création d'un ref pour l'input de restauration de progression
+    this.restoreInput = createRef();
+
+    // Si un code d'allié est passé dans l'URL, on récupère immédiatement les données correspondantes
     const queryParams = new URLSearchParams(document.location.search);
     if (queryParams.has('allyCode')) {
       if (queryParams.has('SessionID') && queryParams.has('NoPull')) {
@@ -46,14 +58,59 @@ class App extends PureComponent {
         props.refreshPlayerData(queryParams.get('allyCode'), true, null);
       }
     }
-    // Supprimer la chaîne de requête après lecture
+    // Supprime la chaîne de requête après lecture
     window.history.replaceState({}, document.title, document.location.href.split('?')[0]);
-
-    // Vérifier la version de l'application
+    // Vérifie la version de l'application
     props.checkVersion();
   }
 
-  escapeListener = function(e) {
+  // Méthode pour changer de thème
+  handleThemeChange = (newThemeKey) => {
+    this.setState({ currentThemeKey: newThemeKey });
+    const newTheme = themes[newThemeKey];
+    if (newTheme) {
+      Object.entries(newTheme).forEach(([varName, varValue]) => {
+        document.documentElement.style.setProperty(varName, varValue);
+      });
+    }
+  };
+
+  // Méthode pour déclencher la restauration de progression en cliquant sur le bouton
+  handleRestoreClick = () => {
+    if (this.restoreInput && this.restoreInput.current) {
+      this.restoreInput.current.click();
+    }
+  };
+
+  // Gestion du changement du fichier pour restaurer la progression
+  handleRestoreFile = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      this.setState({ restoring: true });
+      this.readFile(file, (fileData) => {
+        this.props.restoreProgress(fileData);
+        this.setState({ restoring: false });
+      });
+    }
+  };
+
+  // Méthode pour enregistrer la progression via SaveProgressButton
+  handleSaveProgress = () => {
+    this.setState({ saving: true });
+    this.props.exportDatabase((progressData) => {
+      progressData.version = this.props.version;
+      progressData.allyCode = this.props.allyCode;
+      progressData.profiles.forEach((profile) => delete profile.hotUtilsSessionId);
+      const progressDataSerialized = JSON.stringify(progressData);
+      const userData = new Blob([progressDataSerialized], {
+        type: 'application/json;charset=utf-8'
+      });
+      saveAs(userData, `modsOptimizer-${new Date().toISOString().slice(0, 10)}.json`);
+      this.setState({ saving: false });
+    });
+  };
+
+  escapeListener = function (e) {
     if (e.key === 'Escape' && this.props.isModalCancelable) {
       this.props.hideModal();
     }
@@ -61,17 +118,34 @@ class App extends PureComponent {
 
   componentDidMount() {
     document.addEventListener('keyup', this.escapeListener);
+    this.handleThemeChange(this.state.currentThemeKey);
   }
 
   componentWillUnmount() {
     document.removeEventListener('keyup', this.escapeListener);
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // Afficher le changelog si le profil est chargé et que la version précédente est inférieure à 1.8
+  componentDidUpdate(prevProps, prevState) {
+    // Affichage du changelog si besoin lorsque le profil est récupéré
     if ((this.props.previousVersion < '1.8') && (!prevProps.profile && this.props.profile)) {
       this.props.showModal('changelog-modal', this.changeLogModal());
     }
+  }
+
+  /**
+   * Lit un fichier et transmet son contenu à une fonction de traitement
+   */
+  readFile(fileInput, handleResult) {
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const fileData = event.target.result;
+        handleResult(fileData);
+      } catch (e) {
+        this.props.showError(e.message);
+      }
+    };
+    reader.readAsText(fileInput);
   }
 
   render() {
@@ -79,6 +153,13 @@ class App extends PureComponent {
     return (
       <div className="App">
         {this.header(!instructionsScreen)}
+        {/* Input de restauration masqué */}
+        <input
+          type="file"
+          style={{ display: 'none' }}
+          ref={this.restoreInput}
+          onChange={this.handleRestoreFile}
+        />
         <div className="app-body">
           {instructionsScreen && this.welcome()}
           {!instructionsScreen && this.props.section === 'explore' && <ExploreView />}
@@ -98,225 +179,163 @@ class App extends PureComponent {
     );
   }
 
+  /**
+   * Rendu de l'en-tête de l'application
+   */
   header(showActions) {
     let allyCodyInput;
     return (
       <header className="App-header">
-        <h1 className="App-title" title="Application Optimiseur de Mods">
-          Bricol's Mods Optimizer <span className="subtitle">Star Wars: Galaxy of Heroes™</span>
+        <h1 className="App-title">
+          Grandivory's Mods Optimizer <span className="subtitle">for Star Wars: Galaxy of Heroes™</span>
         </h1>
-  
         {showActions && (
-          <div className="actions-container">
-            {/* Fusion des actions dans une seule barre */}
-            <nav className="actions-bar">
-              {/* Navigation principale */}
-              <div className="nav-section">
-                <button
-                  className={this.props.section === 'explore' ? 'active' : ''}
-                  onClick={() => this.props.changeSection('explore')}
-                  data-tip="Basculer sur Explorer mes mods"
-                >
-                  Explorer mes mods
-                </button>
-                <button
-                  className={this.props.section === 'optimize' ? 'active' : ''}
-                  onClick={() => this.props.changeSection('optimize')}
-                  data-tip="Basculer sur Optimiser mes mods"
-                >
-                  Optimiser mes mods
-                </button>
-              </div>
-  
-              {/* Section code d'alliance et actions associées */}
-              <div className="ally-code-section">
-                <label htmlFor="ally-code" data-tip="Votre code d’alliance">
-                  {this.props.allyCode ? 'Joueur' : 'Code d’alliance'}:
-                </label>
-                {!this.props.allyCode && (
-                  <input
-                    id="ally-code"
-                    type="text"
-                    inputMode="numeric"
-                    size={12}
-                    ref={(input) => (allyCodyInput = input)}
-                    onKeyUp={(e) => {
-                      if (e.key === 'Enter') {
-                        this.props.refreshPlayerData(e.target.value, this.props.keepOldMods, null);
-                      }
-                      if (window.getSelection().toString() !== '') return;
-                      if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) return;
-                      e.target.value = formatAllyCode(e.target.value);
-                    }}
-                    data-tip="Saisissez ou modifiez votre code d’alliance"
-                  />
-                )}
-                {this.props.allyCode && (
-                  <Dropdown
-                    id="ally-code"
-                    value={this.props.allyCode}
-                    onChange={(e) => {
-                      if ('' === e.target.value) {
-                        this.props.showModal('', this.addAllyCodeModal());
-                      } else {
-                        this.props.switchProfile(e.target.value);
-                      }
-                    }}
-                    data-tip="Sélectionnez votre profil"
-                  >
-                    {Object.entries(this.props.playerProfiles).map(([allyCode, playerName]) => (
-                      <option key={allyCode} value={allyCode}>
-                        {playerName}
-                      </option>
-                    ))}
-                    <option key="new" value="">
-                      Nouveau code...
-                    </option>
-                  </Dropdown>
-                )}
-                {this.props.allyCode && (
-                  <button
-                    type="button"
-                    className="red"
-                    onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
-                    data-tip="Supprimer ce code d'alliance"
-                  >
-                    X
-                  </button>
-                )}
-              </div>
-  
-              {/* Synchronisation */}
-              <div className="sync-actions">
-                <SyncLogo
-                  syncing={this.props.isBusy}
-                  onClick={() => {
-                    this.props.refreshPlayerData(
-                      this.props.allyCode || allyCodyInput.value,
-                      this.props.keepOldMods,
-                      null
-                    );
-                  }}
-                  data-tip="Synchroniser vos données avec le serveur"
-                />
-              </div>
-  
-              {/* Actions de progression */}
-              <div className="state-actions">
-                <RestoreProgressButton
-                  restoring={this.props.isRestoring}
-                  onClick={() => {
-                    document.getElementById("restore-progress-input").click();
-                  }}
-                  data-tip="Charger la progression sauvegardée"
-                />
-                <input
-                  type="file"
-                  id="restore-progress-input"
-                  style={{ display: 'none' }}
-                  onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                      this.readFile(e.target.files[0], this.props.restoreProgress);
-                    }
-                  }}
-                />
-                <SaveProgressButton
-                  saving={this.props.isSaving}
-                  onClick={() => {
-                    this.props.exportDatabase((progressData) => {
-                      progressData.version = this.props.version;
-                      progressData.allyCode = this.props.allyCode;
-                      progressData.profiles.forEach((profile) => delete profile.hotUtilsSessionId);
-                      const progressDataSerialized = JSON.stringify(progressData);
-                      const userData = new Blob([progressDataSerialized], {
-                        type: 'application/json;charset=utf-8'
-                      });
-                      saveAs(userData, `modsOptimizer-${(new Date()).toISOString().slice(0, 10)}.json`);
-                    });
-                  }}
-                  data-tip="Télécharger la progression sauvegardée"
-                />
-                {showActions && (
-                  <>
-                    <ResetOptimizerButton
-                      onClick={() => this.props.showModal('reset-modal', this.resetModal())}
-                      data-tip="Réinitialiser les données de l'application"
-                    />
-                    <HotutilsMenuButton
-                      onRetrieveHotUtils={() => {
-                        if (
-                          this.props.hotUtilsSubscription &&
-                          this.props.profile &&
-                          this.props.profile.hotUtilsSessionId
-                        ) {
-                          this.props.showModal('pull-unequipped-modal', this.fetchUnequippedModal());
-                        }
-                      }}
-                      keepOldMods={this.props.keepOldMods}
-                      onToggleKeepOldMods={() => this.props.toggleKeepOldMods()}
-                      data-tip="Accéder au menu HotUtils"
-                    />
-                  </>
-                )}
-              </div>
-            </nav>
-  
-            {/* ReactTooltip pour gérer les infobulles */}
-            <Tooltip place="top" effect="solid" />
-          </div>
+          <nav>
+            <button
+              className={this.props.section === 'explore' ? 'active' : ''}
+              onClick={() => this.props.changeSection('explore')}
+            >
+              Explore my mods
+            </button>
+            <button
+              className={this.props.section === 'optimize' ? 'active' : ''}
+              onClick={() => this.props.changeSection('optimize')}
+            >
+              Optimize my mods
+            </button>
+          </nav>
         )}
+        {/* Sélecteur de thème */}
+        <div className="theme-selector">
+          <ThemeChanger
+            currentTheme={this.state.currentThemeKey}
+            onThemeChange={this.handleThemeChange}
+          />
+        </div>
+        <div className="actions">
+          <label htmlFor="ally-code">{this.props.allyCode ? 'Player' : 'Ally code'}:</label>
+          {!this.props.allyCode && (
+            <input
+              id="ally-code"
+              type="text"
+              inputMode="numeric"
+              size={12}
+              ref={(input) => (allyCodyInput = input)}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                  this.props.refreshPlayerData(e.target.value, this.props.keepOldMods, null);
+                }
+                if (window.getSelection().toString() !== '') return;
+                if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) return;
+                e.target.value = formatAllyCode(e.target.value);
+              }}
+            />
+          )}
+          {this.props.allyCode && (
+            <Dropdown
+              id="ally-code"
+              value={this.props.allyCode}
+              onChange={(e) => {
+                if ('' === e.target.value) {
+                  this.props.showModal('', this.addAllyCodeModal());
+                } else {
+                  this.props.switchProfile(e.target.value);
+                }
+              }}
+            >
+              {Object.entries(this.props.playerProfiles).map(([allyCode, playerName]) => (
+                <option key={allyCode} value={allyCode}>
+                  {playerName}
+                </option>
+              ))}
+              <option key="new" value="">
+                New Code...
+              </option>
+            </Dropdown>
+          )}
+          {this.props.allyCode && (
+            <button
+              type="button"
+              className="red"
+              onClick={() => this.props.showModal('', this.deleteAllyCodeModal())}
+            >
+              X
+            </button>
+          )}
+          <div className="fetch-actions">
+  <button
+    type="button"
+    onClick={() => {
+      this.props.refreshPlayerData(
+        this.props.allyCode || allyCodyInput.value,
+        this.props.keepOldMods,
+        null
+      );
+    }}
+  >
+    Fetch my data!
+  </button>
+  <Help header="How do I pull unequipped mods?">{this.unequippedModsHelp()}</Help>
+  {/* Suppression de la zone "Remember existing mods" */}
+</div>
+<div className="state-actions">
+  {/* Bouton Restaurer */}
+  <RestoreProgressButton onClick={this.handleRestoreClick} restoring={this.state.restoring} />
+  {/* Bouton Enregistrer */}
+  {showActions && (
+    <SaveProgressButton onClick={this.handleSaveProgress} saving={this.state.saving} />
+  )}
+  {/* Bouton HotUtils */}
+  {showActions && (
+    <HotutilsMenuButton 
+      onRetrieveHotUtils={() => {
+        if (
+          this.props.hotUtilsSubscription &&
+          this.props.profile &&
+          this.props.profile.hotUtilsSessionId
+        ) {
+          this.props.showModal('pull-unequipped-modal', this.fetchUnequippedModal());
+        }
+      }}
+      keepOldMods={this.props.keepOldMods}
+      onToggleKeepOldMods={this.props.toggleKeepOldMods}
+      title="HotUtils"
+    />
+  )}
+  {/* Bouton Réinitialiser */}
+  {showActions && (
+    <ResetOptimizerButton onClick={() => this.props.showModal('reset-modal', this.resetModal())} />
+  )}
+</div>
+
+        </div>
       </header>
     );
   }
   
- footer() {
+
+  footer() {
     return (
       <footer className="App-footer">
-        Star Wars: Galaxy of Heroes™ appartient à EA et Capital Games. Ce site n'est pas affilié à ces sociétés.<br />
-        <a
-          href="https://github.com/grandivory/mods-optimizer"
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Contribuer au projet"
-        >
-          Contribuer
+        Star Wars: Galaxy of Heroes™ is owned by EA and Capital Games. This site is not affiliated with them.
+        <br />
+        <a href="https://github.com/grandivory/mods-optimizer" target="_blank" rel="noopener noreferrer">
+          Contribute
         </a>
-        &nbsp;|&nbsp;
-        Demandez de l'aide ou laissez vos commentaires sur{" "}
-        <a
-          href="https://discord.gg/WFKycSm"
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Rejoindre le Discord"
-        >
+        &nbsp;|&nbsp;Ask for help or give feedback on{' '}
+        <a href="https://discord.gg/WFKycSm" target="_blank" rel="noopener noreferrer">
           Discord
         </a>
-        &nbsp;| Vous aimez l'outil ? Pensez à faire un don pour soutenir le développeur !&nbsp;
-        <a
-          href="https://paypal.me/grandivory"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="gold"
-          title="Faire un don via Paypal"
-        >
+        &nbsp;| Like the tool? Consider donating to support the developer!&nbsp;
+        <a href="https://paypal.me/grandivory" target="_blank" rel="noopener noreferrer" className="gold">
           Paypal
         </a>
-        &nbsp;ou&nbsp;
-        <a
-          href="https://www.patreon.com/grandivory"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="gold"
-          title="Soutenir via Patreon"
-        >
+        &nbsp;or&nbsp;
+        <a href="https://www.patreon.com/grandivory" target="_blank" rel="noopener noreferrer" className="gold">
           Patreon
         </a>
         <div className="version">
-          <button
-            className="link"
-            onClick={() => this.props.showModal('changelog-modal', this.changeLogModal())}
-            title="Afficher le changelog"
-          >
+          <button className="link" onClick={() => this.props.showModal('changelog-modal', this.changeLogModal())}>
             version {this.props.version}
           </button>
         </div>
@@ -327,16 +346,16 @@ class App extends PureComponent {
   welcome() {
     return (
       <div className="welcome">
-        <h2 title="Accueil">Bienvenue sur l'Optimiseur de Mods de Grandivory modifié par Bricol pour Star Wars: Galaxy of Heroes™ !</h2>
-        <p title="Présentation de l'application">
-          Cette application vous permettra d'équiper l'ensemble optimal de mods sur chacun de vos personnages en attribuant
-          une valeur à chaque statistique qu'un mod peut conférer. Vous indiquerez une liste de personnages à optimiser ainsi
-          que les statistiques recherchées, et l'outil déterminera les meilleurs mods à équiper, personnage par personnage,
-          jusqu'à épuisement de votre liste.
+        <h2>
+          Welcome to Grandivory's Mods Optimizer for Star Wars: Galaxy of Heroes™!
+        </h2>
+        <p>
+          This application will allow you to equip the optimum mod set on every character you have by assigning a value to each stat that a mod can confer.
+          You'll give it a list of characters to optimize along with the stats that you're looking for, and it will determine the best mods to equip, one character at a time, until your list is exhausted.
         </p>
-        <p title="Instructions">
-          Pour démarrer, saisissez votre code d’alliance dans le champ en haut et cliquez sur "Récupérer mes données !".
-          Notez que vos mods ne seront mis à jour qu'une fois par heure au maximum.
+        <p>
+          To get started, enter your ally code in the box in the header and click "Get my mods!".
+          Note that your mods will only be updated a maximum of once per hour.
         </p>
       </div>
     );
@@ -345,23 +364,25 @@ class App extends PureComponent {
   changeLogModal() {
     return (
       <div>
-        <h2 className="gold" title="Changelog">
-          L'Optimiseur de Mods de Grandivory 1.8.53 develop a été forké par Bricol !
+        <h2 className="gold">
+          Grandivory's Mods Optimizer has updated to version 1.8!
         </h2>
-        <h3 title="Résumé des changements">Voici un résumé des changements apportés dans cette version :</h3>
+        <h3>Here's a short summary of the changes included in this version:</h3>
         <ul>
-          <li title="Nouvelle intégration HotUtils">
-            Intégration mise à jour avec{" "}
-            <a href="https://www.hotutils.com" target="_blank" rel="noopener noreferrer" title="Accéder à HotUtils">
+          <li>
+            Updated the integration with{' '}
+            <a href="https://www.hotutils.com" target="_blank" rel="noopener noreferrer">
               HotUtils
-            </a>{" "}
-            en version 2 ! Vos données de mods sont désormais récupérées sans limitation temporelle, avec une barre de
-            progression lors des déplacements de mods.
+            </a>{' '}
+            to version 2! This brings some great advantages to both HotUtils subscribers and non-subscribers.
+            ALL players can now fetch their mod data <strong>as often as they'd like</strong>, with no cooldown between fetches!
+            A HotUtils subscription is still required to fetch unequipped mods.
+            A progress bar is now also shown when using HotUtils to move your mods in-game, and that move can be cancelled at any time!
           </li>
         </ul>
-        <h3 title="Bon modding">Bon modding !</h3>
+        <h3>Happy Modding!</h3>
         <div className="actions">
-          <button type="button" onClick={() => this.props.hideModal()} title="Fermer le changelog">
+          <button type="button" onClick={() => this.props.hideModal()}>
             OK
           </button>
         </div>
@@ -372,17 +393,17 @@ class App extends PureComponent {
   resetModal() {
     return (
       <div>
-        <h2 title="Réinitialiser">Réinitialiser l'Optimiseur de Mods ?</h2>
-        <p title="Attention">
-          Si vous cliquez sur "Réinitialiser", toutes les données actuellement enregistrées par l'application (mods,
-          configurations, etc.) seront supprimées. Êtes-vous sûr de vouloir procéder ?
+        <h2>Reset the mods optimizer?</h2>
+        <p>
+          If you click "Reset", everything that the application currently has saved - your mods, character configuration, selected characters, etc. - will all be deleted.
+          Are you sure that's what you want?
         </p>
         <div className="actions">
-          <button type="button" onClick={() => this.props.hideModal()} title="Annuler">
-            Annuler
+          <button type="button" onClick={() => this.props.hideModal()}>
+            Cancel
           </button>
-          <button type="button" className="red" onClick={() => this.props.reset()} title="Confirmer la réinitialisation">
-            Réinitialiser
+          <button type="button" className="red" onClick={() => this.props.reset()}>
+            Reset
           </button>
         </div>
       </div>
@@ -393,8 +414,8 @@ class App extends PureComponent {
     let allyCodeInput;
     return (
       <div className="add-ally-code-form">
-        <h4 title="Ajouter un code d'alliance">Ajouter un nouveau code d'alliance</h4>
-        <label htmlFor="new-ally-code" title="Code d'alliance">Code d'alliance :</label>
+        <h4>Add a new Ally Code</h4>
+        <label htmlFor="new-ally-code">Ally code: </label>
         <input
           id="new-ally-code"
           type="text"
@@ -406,18 +427,24 @@ class App extends PureComponent {
               this.props.hideModal();
               this.props.refreshPlayerData(e.target.value, false, null);
             }
-            if (window.getSelection().toString() !== '') return;
-            if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) return;
+            if (window.getSelection().toString() !== '') {
+              return;
+            }
+            if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
+              return;
+            }
             e.target.value = formatAllyCode(e.target.value);
           }}
-          title="Saisissez le nouveau code d'alliance"
         />
         <div className="actions">
-          <button type="button" onClick={() => {
-            this.props.hideModal();
-            this.props.refreshPlayerData(allyCodeInput.value, false, null);
-          }} title="Charger ce code">
-            Récupérer mes données !
+          <button
+            type="button"
+            onClick={() => {
+              this.props.hideModal();
+              this.props.refreshPlayerData(allyCodeInput.value, false, null);
+            }}
+          >
+            Fetch my data!
           </button>
         </div>
       </div>
@@ -427,16 +454,19 @@ class App extends PureComponent {
   deleteAllyCodeModal() {
     return (
       <div>
-        <h2 title="Supprimer le code">
-          Supprimer <strong>{formatAllyCode(this.props.allyCode)}</strong> ?
+        <h2>
+          Delete <strong>{formatAllyCode(this.props.allyCode)}</strong>?
         </h2>
-        <p title="Attention à la suppression">
-          Cela supprimera le code d'alliance ainsi que toutes les données associées.
+        <p>
+          This will delete the ally code, all of its mods, character selections, and targets from stored data.
         </p>
-        <p title="Confirmation">Êtes-vous sûr de vouloir procéder ?</p>
+        <p>
+          You will be able to restore the character and mod data by fetching with this ally code again.
+        </p>
+        <p>Are you sure you want to delete this code?</p>
         <div className="actions">
-          <button type="button" onClick={() => this.props.hideModal()} title="Annuler">
-            Annuler
+          <button type="button" onClick={() => this.props.hideModal()}>
+            Cancel
           </button>
           <button
             type="button"
@@ -445,9 +475,8 @@ class App extends PureComponent {
               this.props.hideModal();
               this.props.deleteProfile(this.props.allyCode);
             }}
-            title="Supprimer définitivement ce code"
           >
-            Supprimer
+            Delete
           </button>
         </div>
       </div>
@@ -457,18 +486,20 @@ class App extends PureComponent {
   fetchUnequippedModal() {
     return (
       <div key="hotutils-move-mods-modal">
-        <h2 title="Récupérer les mods non équipés">Récupérer vos mods non équipés via HotUtils</h2>
-        <p title="Information">
-          Cette action récupérera toutes vos données, y compris les mods non équipés, en utilisant HotUtils.
-          Notez que vous serez déconnecté du jeu si vous y êtes connecté.
+        <h2>Fetch your unequipped mods using HotUtils</h2>
+        <p>
+          This will fetch all of your player data, including unequipped mods by using HotUtils.
+          Please note that <strong className="gold">
+            this action will log you out of Galaxy of Heroes if you are currently logged in
+          </strong>.
         </p>
-        <p title="Attention">
-          <strong>Attention :</strong> cette fonctionnalité contrevient aux conditions d'utilisation de Star Wars: Galaxy
-          of Heroes.
+        <p>
+          <strong>Use at your own risk!</strong> HotUtils functionality breaks the terms of service for Star Wars:
+          Galaxy of Heroes. You assume all risk in using this tool. Grandivory's Mods Optimizer is not associated with HotUtils.
         </p>
         <div className="actions">
-          <button type="button" className="red" onClick={this.props.hideModal} title="Annuler">
-            Annuler
+          <button type="button" className="red" onClick={this.props.hideModal}>
+            Cancel
           </button>
           <button
             type="button"
@@ -481,9 +512,8 @@ class App extends PureComponent {
                 true
               );
             }}
-            title="Récupérer les mods via HotUtils"
           >
-            Récupérer mes données
+            Fetch my data
           </button>
         </div>
       </div>
@@ -492,34 +522,26 @@ class App extends PureComponent {
 
   unequippedModsHelp() {
     return (
-      <div className="help" title="Aide pour HotUtils">
+      <div className="help">
         <p>
-          HotUtils permet de récupérer toutes vos données de mods, y compris les mods non équipés, à tout moment,
-          sans limitation. Utilisez cette fonctionnalité à vos risques et périls.
+          HotUtils is another tool for SWGOH that allows you to directly modify your game account. One of the advantages
+          of being a subscriber to HotUtils is that it can pull all of your mod data, including unequipped mods, at any
+          time, and without any cooldown period. Normally, your player and mod data can only be updated once every hour.
         </p>
         <p>
-          <a href="https://www.hotutils.com/" target="_blank" rel="noopener noreferrer" title="Visiter HotUtils">
+          <strong>Use at your own risk!</strong> HotUtils functionality breaks the terms of service for Star Wars:
+          Galaxy of Heroes. You assume all risk in using this tool.
+        </p>
+        <p>
+          <a href="https://www.hotutils.com/" target="_blank" rel="noopener noreferrer">
             https://www.hotutils.com/
           </a>
         </p>
         <p>
-          <img className="fit" src="/img/hotsauce512.png" alt="hotsauce" title="Logo Hotutils" />
+          <img className="fit" src="/img/hotsauce512.png" alt="hotsauce" />
         </p>
       </div>
     );
-  }
-
-  readFile(fileInput, handleResult) {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const fileData = event.target.result;
-        handleResult(fileData);
-      } catch (e) {
-        this.props.showError(e.message);
-      }
-    };
-    reader.readAsText(fileInput);
   }
 }
 
@@ -528,8 +550,6 @@ const mapStateToProps = (state) => {
     allyCode: state.allyCode,
     error: state.error,
     isBusy: state.isBusy,
-    isSaving: state.isSaving,
-    isRestoring: state.isRestoring,
     keepOldMods: state.keepOldMods,
     displayModal: !!state.modal,
     modalClass: state.modal ? state.modal.class : '',
@@ -541,7 +561,6 @@ const mapStateToProps = (state) => {
     version: state.version,
     hotUtilsSubscription: state.hotUtilsSubscription
   };
-
   if (state.profile) {
     appProps.profile = state.profile;
   }

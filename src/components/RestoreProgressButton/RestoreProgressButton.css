@@ -1,24 +1,25 @@
-.restore-progress-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5em;
-    display: inline-flex;
-    align-items: center;
-  }
-  
-  .restore-icon {
-    fill: currentColor;
-    width: 24px;
-    height: 24px;
-  }
-  
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-  
-  .spinning {
-    animation: spin 1s linear infinite;
-  }
-  
+/* /src/components/SaveProgressButton/SaveProgressButton.css */
+.save-progress-button {
+  display: inline-block;
+  margin: 0.25em;
+}
+
+.save-icon {
+  display: block;            /* S'assure que l'élément occupe exactement l'espace défini */
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;        /* Coins arrondis */
+  object-fit: cover;         /* L'image couvre tout le carré */
+  border: 2px solid #ffffff; /* Bordure visible */
+  box-sizing: border-box;    /* La bordure est incluse dans les dimensions */
+}
+
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}

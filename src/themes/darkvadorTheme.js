@@ -1,25 +1,25 @@
-const yodaTheme = {
-  "--background-color": "#203733",       // Fond vert profond rappelant une forêt ancienne
-  "--text-color": "#d5e7dc",               // Texte clair pour un contraste harmonieux
+const darkVaderTheme = {
+  "--background-color": "#000000",       // Fond noir pour une ambiance imposante
+  "--text-color": "#f0f0f0",               // Texte clair pour garantir le contraste
   "--font-family": "sans-serif",
-  "--accent-color": "#6abf69",             // Accent d'un vert vif et apaisant
+  "--accent-color": "#ff0000",             // Accent rouge vif pour rappeler la présence de Dark Vador
   "--purple-color": "#9b59b6",
   "--blue-color": "#2980b9",
-  "--green-color": "#4CAF50",              // Vert vibrant pour les éléments principaux
-  "--gray-color": "#bdc3c7",
-  "--red-text-color": "#e74c3c",
+  "--green-color": "#27ae60",
+  "--gray-color": "#7f8c8d",
+  "--red-text-color": "#ff0000",
   "--decrease-color": "#c0392b",
-  "--header-background": "#2c5f4e",         // Header en vert sombre et naturel
-  "--header-text-color": "#d5e7dc",
-  "--header-border-color": "#1e4a3a",
-  "--title-subtitle-color": "#d5e7dc",
-  "--ally-code-input-color": "#6abf69",
-  "--footer-background": "#2c5f4e",         // Footer en harmonie avec le header
-  "--footer-text-color": "#d5e7dc",
-  "--footer-border-color": "#1e4a3a",
-  "--scrollbar-track-color": "#d5e7dc",
-  "--scrollbar-border-color": "#bdc3c7",
-  "--scrollbar-thumb-color": "#6abf69",
+  "--header-background": "#1a1a1a",        // Header sombre pour une cohérence avec le thème
+  "--header-text-color": "#f0f0f0",
+  "--header-border-color": "#333333",
+  "--title-subtitle-color": "#f0f0f0",
+  "--ally-code-input-color": "#ff0000",
+  "--footer-background": "#1a1a1a",        // Footer en harmonie avec le header
+  "--footer-text-color": "#f0f0f0",
+  "--footer-border-color": "#333333",
+  "--scrollbar-track-color": "#f0f0f0",
+  "--scrollbar-border-color": "#7f8c8d",
+  "--scrollbar-thumb-color": "#ff0000",
   // Variables supplémentaires pour personnalisation ultérieure
   "--body-background-image": "",
   "--body-background-size": "",
@@ -103,4 +103,4 @@ const yodaTheme = {
   "--sidebar-child-border-color": ""
 };
 
-export default yodaTheme;
+export default darkVaderTheme;

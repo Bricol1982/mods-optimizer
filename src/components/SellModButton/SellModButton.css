@@ -1,0 +1,30 @@
+.delete-button {
+    background-color: darkred; /* Fond rouge sombre */
+    border: 1px outset #ff0000; /* Bordure rouge */
+    padding: 8px 12px;
+    color: white;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .delete-button i {
+    font-size: 1.5em; /* Taille de l'icône */
+  }
+  
+  .delete-button:hover {
+    opacity: 0.8; /* Effet au survol */
+  }
+  
+  .delete-button:focus {
+    outline: none; /* Suppression de la bordure de focus */
+  }
+  
+  .delete-button.red {
+    background-color: darkred;
+    border: 1px outset #ff0000;
+  }
+  

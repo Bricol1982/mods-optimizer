@@ -1,0 +1,20 @@
+/* /conponents/ThemeChanger/ThemeChanger.css */
+.theme-changer {
+    display: inline-block;
+    margin-right: 20px;
+    font-family: sans-serif;
+  }
+  
+  .theme-changer label {
+    margin-right: 8px;
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+  
+  .theme-changer select {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  
